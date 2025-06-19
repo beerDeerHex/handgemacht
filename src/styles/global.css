@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pompiere&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-indie: "Indie Flower", "sans-serif";
+}
+
+@theme {
+  --font-pompiere: "Pompiere", "sans-serif";
+}

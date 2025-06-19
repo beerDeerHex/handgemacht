@@ -1,0 +1,80 @@
+---
+import "../styles/global.css";
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  images: ImageMetadata[];
+  color?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  loading?: "lazy" | "eager" | undefined;
+}
+
+const colorMap = {
+  orange: "bg-orange-50",
+  blue: "bg-blue-50",
+};
+
+const borderColorMap = {
+  orange: "border-orange-200",
+  blue: "border-blue-200",
+};
+
+const buttonColorMap = {
+  orange: "bg-orange-300",
+  blue: "bg-blue-300",
+};
+
+const hoverColorMap = {
+  orange: "hover:bg-orange-200",
+  blue: "hover:bg-blue-200",
+};
+
+const {
+  title = "Titel",
+  images = [],
+  color = "blue",
+  ctaHref = "#",
+  ctaLabel = "Alle ansehen",
+  loading = "lazy",
+} = Astro.props;
+---
+
+<div
+  class={`flex flex-col w-full h-200 justify-between ${colorMap[color as keyof typeof colorMap]}`}
+>
+  <div class="flex-1/6 h-10 flex items-center justify-center">
+    <h1 class="text-5xl font-pompiere tracking-widest">{title}</h1>
+  </div>
+
+  <div class="flex-4/6 h-10">
+    <div class="flex flex-col md:flex-row justify-center h-full gap-4 px-4">
+      {
+        images.map((img, i) => (
+          <div
+            class={`bg-white hover:opacity-70 flex-1 p-2 rounded-xl border-4 ${borderColorMap[color as keyof typeof borderColorMap]} shadow-lg inline-block relative cursor-pointer`}
+            onclick={`openModal('${title}','${i}')`}
+          >
+            <Image
+              id={`img-${title}-${i}`}
+              src={img}
+              alt="Produktbild"
+              class="w-full h-full object-contain cursor-pointer"
+              loading={loading}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="flex-1/6 h-10 flex items-center justify-center">
+    <a
+      href={ctaHref}
+      class={`px-6 py-3 ${buttonColorMap[color as keyof typeof buttonColorMap]} text-black rounded-lg shadow ${hoverColorMap[color as keyof typeof hoverColorMap]} tracking-wider transition-colors duration-200 text-xl font-pompiere border`}
+    >
+      {ctaLabel}
+    </a>
+  </div>
+</div>

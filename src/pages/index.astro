@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProductShowcase from "../components/ProductShowcase.astro";
+import ImageModal from "../components/ImageModal.astro";
+
+import Decke1 from "../images/Decken-Homepage/Decke1.jpg";
+import Decke2 from "../images/Decken-Homepage/Decke2.jpg";
+import Decke3 from "../images/Decken-Homepage/Decke3.jpg";
+import Rucksack1 from "../images/Rucksaecke-Homepage/Rucksack1.jpg";
+import Rucksack2 from "../images/Rucksaecke-Homepage/Rucksack2.jpg";
+import Rucksack3 from "../images/Rucksaecke-Homepage/Rucksack3.jpg";
+import Tasche1 from "../images/Taschen-Homepage/Tasche1.jpg";
+import Tasche2 from "../images/Taschen-Homepage/Tasche2.jpg";
+import Tasche3 from "../images/Taschen-Homepage/Tasche3.jpg";
+import Knopf1 from "../images/Knoepfe-Homepage/Knopf1.jpg";
+import Knopf2 from "../images/Knoepfe-Homepage/Knopf2.jpg";
+import Knopf3 from "../images/Knoepfe-Homepage/Knopf3.jpg";
+import Foto1 from "../images/Verschiedenes-Homepage/Foto1.jpg";
+import Foto2 from "../images/Verschiedenes-Homepage/Foto2.jpg";
+import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
+---
+
+<Layout>
+  <ProductShowcase
+    title="Decken"
+    images={[Decke1, Decke2, Decke3]}
+    color="blue"
+    ctaHref="/decken"
+    ctaLabel="Alle Decken ansehen"
+    loading="eager"
+  />
+  <div class="w-full h-10 relative overflow-hidden">
+    <div class="absolute inset-0 w-full h-full bg-blue-50"></div>
+    <svg
+      class="absolute inset-0 w-full h-full"
+      viewBox="0 0 100 40"
+      preserveAspectRatio="none"
+      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
+    >
+      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-orange-50"
+      ></path>
+    </svg>
+  </div>
+  <ProductShowcase
+    title="Rucksäcke"
+    images={[Rucksack1, Rucksack2, Rucksack3]}
+    color="orange"
+    ctaHref="/rucksaecke"
+    ctaLabel="Alle Rucksäcke ansehen"
+  />
+  <div class="w-full h-10 relative overflow-hidden">
+    <div class="absolute inset-0 w-full h-full bg-orange-50"></div>
+    <svg
+      class="absolute inset-0 w-full h-full"
+      viewBox="0 0 100 40"
+      preserveAspectRatio="none"
+      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
+    >
+      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-blue-50"
+      ></path>
+    </svg>
+  </div>
+  <ProductShowcase
+    title="Taschen"
+    images={[Tasche1, Tasche2, Tasche3]}
+    color="blue"
+    ctaHref="/taschen"
+    ctaLabel="Alle Taschen ansehen"
+  />
+  <div class="w-full h-10 relative overflow-hidden">
+    <div class="absolute inset-0 w-full h-full bg-blue-50"></div>
+    <svg
+      class="absolute inset-0 w-full h-full"
+      viewBox="0 0 100 40"
+      preserveAspectRatio="none"
+      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
+    >
+      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-orange-50"
+      ></path>
+    </svg>
+  </div>
+  <ProductShowcase
+    title="Zwirnknöpfe"
+    images={[Knopf1, Knopf2, Knopf3]}
+    color="orange"
+    ctaHref="/knoepfe"
+    ctaLabel="Alle Knöpfe ansehen"
+  />
+  <div class="w-full h-10 relative overflow-hidden">
+    <div class="absolute inset-0 w-full h-full bg-orange-50"></div>
+    <svg
+      class="absolute inset-0 w-full h-full"
+      viewBox="0 0 100 40"
+      preserveAspectRatio="none"
+      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
+    >
+      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-blue-50"
+      ></path>
+    </svg>
+  </div>
+  <ProductShowcase
+    title="Verschiedenes"
+    images={[Foto1, Foto2, Foto3]}
+    color="blue"
+    ctaHref="/verschiedenes"
+    ctaLabel="Alle ansehen"
+  />
+  <ImageModal />
+</Layout>
