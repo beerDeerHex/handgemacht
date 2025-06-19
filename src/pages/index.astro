@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import ProductShowcase from "../components/ProductShowcase.astro";
 import ImageModal from "../components/ImageModal.astro";
+import WaveDivider from "../components/WaveDivider.astro";
 
 import Decke1 from "../images/Decken-Homepage/Decke1.jpg";
 import Decke2 from "../images/Decken-Homepage/Decke2.jpg";
@@ -18,9 +19,33 @@ import Knopf3 from "../images/Knoepfe-Homepage/Knopf3.jpg";
 import Foto1 from "../images/Verschiedenes-Homepage/Foto1.jpg";
 import Foto2 from "../images/Verschiedenes-Homepage/Foto2.jpg";
 import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
+import HeroQuilt from "../images/Decken-Homepage/DeckeFront.jpg";
+import { Image } from "astro:assets";
 ---
 
 <Layout>
+  <section
+    class="w-full h-230 flex flex-col md:flex-row items-center justify-center bg-white"
+  >
+    <div class="flex-1 flex items-center justify-center py-12">
+      <h1
+        class="text-6xl font-pompiere text-gray-900 ps-20 text-center md:text-left"
+      >
+        Jedes Stück ein Unikat – handgemachte Patchwork-Kreationen von Claudia
+        Wild
+      </h1>
+    </div>
+    <div class="flex-1 h-full flex items-end justify-center">
+      <Image
+        src={HeroQuilt}
+        alt="Handmade quilt"
+        class="h-full w-full object-cover pt-30"
+        loading="eager"
+      />
+    </div>
+  </section>
+  <div class="h-20"></div>
+  <WaveDivider colorAbove="white" colorBelow="blue" />
   <ProductShowcase
     title="Decken"
     images={[Decke1, Decke2, Decke3]}
@@ -29,18 +54,7 @@ import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
     ctaLabel="Alle Decken ansehen"
     loading="eager"
   />
-  <div class="w-full h-10 relative overflow-hidden">
-    <div class="absolute inset-0 w-full h-full bg-blue-50"></div>
-    <svg
-      class="absolute inset-0 w-full h-full"
-      viewBox="0 0 100 40"
-      preserveAspectRatio="none"
-      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
-    >
-      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-orange-50"
-      ></path>
-    </svg>
-  </div>
+  <WaveDivider colorAbove="blue" colorBelow="orange" />
   <ProductShowcase
     title="Rucksäcke"
     images={[Rucksack1, Rucksack2, Rucksack3]}
@@ -48,18 +62,7 @@ import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
     ctaHref="/rucksaecke"
     ctaLabel="Alle Rucksäcke ansehen"
   />
-  <div class="w-full h-10 relative overflow-hidden">
-    <div class="absolute inset-0 w-full h-full bg-orange-50"></div>
-    <svg
-      class="absolute inset-0 w-full h-full"
-      viewBox="0 0 100 40"
-      preserveAspectRatio="none"
-      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
-    >
-      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-blue-50"
-      ></path>
-    </svg>
-  </div>
+  <WaveDivider colorAbove="orange" colorBelow="blue" />
   <ProductShowcase
     title="Taschen"
     images={[Tasche1, Tasche2, Tasche3]}
@@ -67,18 +70,7 @@ import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
     ctaHref="/taschen"
     ctaLabel="Alle Taschen ansehen"
   />
-  <div class="w-full h-10 relative overflow-hidden">
-    <div class="absolute inset-0 w-full h-full bg-blue-50"></div>
-    <svg
-      class="absolute inset-0 w-full h-full"
-      viewBox="0 0 100 40"
-      preserveAspectRatio="none"
-      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
-    >
-      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-orange-50"
-      ></path>
-    </svg>
-  </div>
+  <WaveDivider colorAbove="blue" colorBelow="orange" />
   <ProductShowcase
     title="Zwirnknöpfe"
     images={[Knopf1, Knopf2, Knopf3]}
@@ -86,18 +78,7 @@ import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
     ctaHref="/knoepfe"
     ctaLabel="Alle Knöpfe ansehen"
   />
-  <div class="w-full h-10 relative overflow-hidden">
-    <div class="absolute inset-0 w-full h-full bg-orange-50"></div>
-    <svg
-      class="absolute inset-0 w-full h-full"
-      viewBox="0 0 100 40"
-      preserveAspectRatio="none"
-      style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
-    >
-      <path d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z" class="fill-blue-50"
-      ></path>
-    </svg>
-  </div>
+  <WaveDivider colorAbove="orange" colorBelow="blue" />
   <ProductShowcase
     title="Verschiedenes"
     images={[Foto1, Foto2, Foto3]}

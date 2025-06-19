@@ -1,0 +1,37 @@
+---
+interface Props {
+  colorAbove?: string;
+  colorBelow?: string;
+}
+
+const bgColorMap = {
+  orange: "bg-orange-50",
+  blue: "bg-blue-50",
+  white: "bg-white",
+};
+
+const fillColorMap = {
+  orange: "fill-orange-50",
+  blue: "fill-blue-50",
+  white: "fill-white",
+};
+
+const { colorAbove = "blue", colorBelow = "blue" } = Astro.props;
+---
+
+<div class="w-full h-10 relative overflow-hidden">
+  <div
+    class={`absolute inset-0 w-full h-full ${bgColorMap[colorAbove as keyof typeof bgColorMap]}`}
+  >
+  </div>
+  <svg
+    class="absolute inset-0 w-full h-full"
+    viewBox="0 0 100 40"
+    preserveAspectRatio="none"
+    style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));"
+  >
+    <path
+      d="M0,40 Q25,0 50,20 Q75,40 100,20 L100,40 Z"
+      class={`${fillColorMap[colorBelow as keyof typeof fillColorMap]}`}></path>
+  </svg>
+</div>
