@@ -49,11 +49,12 @@ const {
   </div>
 
   <div class="flex-4/6 h-10">
-    <div class="flex flex-col md:flex-row justify-center h-full gap-4 px-4">
+    <div class="flex flex-col xl:flex-row justify-center h-full gap-4 px-4">
       {
         images.map((img, i) => (
           <div
-            class={`bg-white hover:opacity-70 flex-1 p-2 rounded-xl border-4 ${borderColorMap[color as keyof typeof borderColorMap]} shadow-lg inline-block relative cursor-pointer`}
+            class={`bg-white hover:opacity-70 w-full xl:w-auto flex-1 p-2 rounded-xl border-4 ${borderColorMap[color as keyof typeof borderColorMap]} shadow-lg relative cursor-pointer
+            ${i === 0 ? "" : "hidden xl:block"}`}
             onclick={`openModal('${title}','${i}')`}
           >
             <Image

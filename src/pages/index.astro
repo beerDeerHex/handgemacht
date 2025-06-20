@@ -4,46 +4,47 @@ import ProductShowcase from "../components/ProductShowcase.astro";
 import ImageModal from "../components/ImageModal.astro";
 import WaveDivider from "../components/WaveDivider.astro";
 
-import Decke1 from "../images/Decken-Homepage/Decke1.jpg";
-import Decke2 from "../images/Decken-Homepage/Decke2.jpg";
-import Decke3 from "../images/Decken-Homepage/Decke3.jpg";
-import Rucksack1 from "../images/Rucksaecke-Homepage/Rucksack1.jpg";
-import Rucksack2 from "../images/Rucksaecke-Homepage/Rucksack2.jpg";
-import Rucksack3 from "../images/Rucksaecke-Homepage/Rucksack3.jpg";
-import Tasche1 from "../images/Taschen-Homepage/Tasche1.jpg";
-import Tasche2 from "../images/Taschen-Homepage/Tasche2.jpg";
-import Tasche3 from "../images/Taschen-Homepage/Tasche3.jpg";
-import Knopf1 from "../images/Knoepfe-Homepage/Knopf1.jpg";
-import Knopf2 from "../images/Knoepfe-Homepage/Knopf2.jpg";
-import Knopf3 from "../images/Knoepfe-Homepage/Knopf3.jpg";
-import Foto1 from "../images/Verschiedenes-Homepage/Foto1.jpg";
-import Foto2 from "../images/Verschiedenes-Homepage/Foto2.jpg";
-import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
-import HeroQuilt from "../images/Decken-Homepage/DeckeFront.jpg";
+import Decke1 from "../images/Decken-Homepage/Decke1.JPG";
+import Decke2 from "../images/Decken-Homepage/Decke2.JPG";
+import Decke3 from "../images/Decken-Homepage/Decke3.JPG";
+import Rucksack1 from "../images/Rucksaecke-Homepage/Rucksack1.JPG";
+import Rucksack2 from "../images/Rucksaecke-Homepage/Rucksack2.JPG";
+import Rucksack3 from "../images/Rucksaecke-Homepage/Rucksack3.JPG";
+import Tasche1 from "../images/Taschen-Homepage/Tasche1.JPG";
+import Tasche2 from "../images/Taschen-Homepage/Tasche2.JPG";
+import Tasche3 from "../images/Taschen-Homepage/Tasche3.JPG";
+import Knopf1 from "../images/Knoepfe-Homepage/Knopf1.JPG";
+import Knopf2 from "../images/Knoepfe-Homepage/Knopf2.JPG";
+import Knopf3 from "../images/Knoepfe-Homepage/Knopf3.JPG";
+import Foto1 from "../images/Verschiedenes-Homepage/Foto1.JPG";
+import Foto2 from "../images/Verschiedenes-Homepage/Foto2.JPG";
+import Foto3 from "../images/Verschiedenes-Homepage/Foto3.JPG";
+import HeroQuilt from "../images/Decken-Homepage/DeckeFront.JPG";
 import { Image } from "astro:assets";
 ---
 
 <Layout>
   <section
-    class="w-full h-230 flex flex-col md:flex-row items-center justify-center bg-white"
+    class="w-full h-100 2xl:h-230 flex flex-col md:flex-row items-center justify-center bg-white"
   >
     <div class="flex-1 flex items-center justify-center py-12">
       <h1
-        class="text-6xl font-pompiere text-gray-900 ps-20 text-center md:text-left"
+        class="xl:text-6xl text-4xl font-pompiere text-gray-900 xl:px-20 text-center xl:text-left"
       >
-        Jedes Stück ein Unikat – handgemachte Patchwork-Kreationen von Claudia
+        Jedes Stück ein Unikat - handgemachte Patchwork-Kreationen von Claudia
         Wild
       </h1>
     </div>
-    <div class="flex-1 h-full flex items-end justify-center">
+    <div class="flex-1 h-full items-end justify-center hidden xl:flex">
       <Image
         src={HeroQuilt}
         alt="Handmade quilt"
-        class="h-full w-full object-cover pt-30"
+        class="h-full w-full object-cover pt-40"
         loading="eager"
       />
     </div>
   </section>
+
   <div class="h-20"></div>
   <WaveDivider colorAbove="white" colorBelow="blue" />
   <ProductShowcase
@@ -52,7 +53,6 @@ import { Image } from "astro:assets";
     color="blue"
     ctaHref="/decken"
     ctaLabel="Alle Decken ansehen"
-    loading="eager"
   />
   <WaveDivider colorAbove="blue" colorBelow="orange" />
   <ProductShowcase
