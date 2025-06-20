@@ -1,0 +1,40 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout dev repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Push to deployment repo
+        run: |
+          git config --global user.name "Stefan Wild"
+
+          git clone https://x-access-token:${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/beerDeerHex/handgemacht-deploy.git deploy-repo
+
+          rm -rf deploy-repo/*
+          cp -r dist/* deploy-repo/
+
+          cd deploy-repo
+          git add .
+          git commit -m "Deploy from dev repo on $(date)"
+          git push
