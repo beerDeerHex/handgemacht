@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { Image } from "astro:assets";
+import Wood from "../images/wood.webp";
 
 interface Props {
   title: string;
@@ -14,11 +15,6 @@ interface Props {
 const colorMap = {
   orange: "bg-orange-50",
   blue: "bg-blue-50",
-};
-
-const borderColorMap = {
-  orange: "border-orange-200",
-  blue: "border-blue-200",
 };
 
 const buttonColorMap = {
@@ -53,7 +49,8 @@ const {
       {
         images.map((img, i) => (
           <div
-            class={`bg-white hover:opacity-70 w-full xl:w-auto flex-1 p-2 rounded-xl border-4 ${borderColorMap[color as keyof typeof borderColorMap]} shadow-lg relative cursor-pointer
+            style={`background-image: url('${Wood.src}')`}
+            class={`bg-cover bg-center w-full xl:w-auto flex-1 p-4 rounded-2xl border-4 border-yellow-900 shadow-lg relative cursor-pointer hover:opacity-80
             ${i === 0 ? "" : "hidden xl:block"}`}
             onclick={`openModal('${title}','${i}')`}
           >
@@ -61,7 +58,7 @@ const {
               id={`img-${title}-${i}`}
               src={img}
               alt="Produktbild"
-              class="w-full h-full object-contain cursor-pointer"
+              class="w-full h-full object-contain cursor-pointer rounded-xl z-100"
               loading={loading}
             />
           </div>
