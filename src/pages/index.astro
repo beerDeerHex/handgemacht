@@ -4,21 +4,6 @@ import ProductShowcase from "../components/ProductShowcase.astro";
 import ImageModal from "../components/ImageModal.astro";
 import WaveDivider from "../components/WaveDivider.astro";
 
-import Decke1 from "../images/Decken-Homepage/Decke1.jpg";
-import Decke2 from "../images/Decken-Homepage/Decke2.jpg";
-import Decke3 from "../images/Decken-Homepage/Decke3.jpg";
-import Rucksack1 from "../images/Rucksaecke-Homepage/Rucksack1.jpg";
-import Rucksack2 from "../images/Rucksaecke-Homepage/Rucksack2.jpg";
-import Rucksack3 from "../images/Rucksaecke-Homepage/Rucksack3.jpg";
-import Tasche1 from "../images/Taschen-Homepage/Tasche1.jpg";
-import Tasche2 from "../images/Taschen-Homepage/Tasche2.jpg";
-import Tasche3 from "../images/Taschen-Homepage/Tasche3.jpg";
-import Knopf1 from "../images/Knoepfe-Homepage/Knopf1.jpg";
-import Knopf2 from "../images/Knoepfe-Homepage/Knopf2.jpg";
-import Knopf3 from "../images/Knoepfe-Homepage/Knopf3.jpg";
-import Foto1 from "../images/Verschiedenes-Homepage/Foto1.jpg";
-import Foto2 from "../images/Verschiedenes-Homepage/Foto2.jpg";
-import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
 import HeroImage from "../images/hero.jpg";
 import { Image } from "astro:assets";
 ---
@@ -39,7 +24,7 @@ import { Image } from "astro:assets";
       <Image
         src={HeroImage}
         alt="Handmade quilt"
-        class="h-full w-full object-cover pt-10 2xl:pt-20"
+        class="h-full w-full object-cover"
         loading="eager"
       />
     </div>
@@ -48,7 +33,7 @@ import { Image } from "astro:assets";
   <WaveDivider colorAbove="white" colorBelow="gray" />
   <ProductShowcase
     title="Taschen"
-    images={[Tasche1, Tasche2, Tasche3]}
+    imageType="Taschen"
     color="gray"
     ctaHref="/taschen"
     ctaLabel="Alle Taschen ansehen"
@@ -56,7 +41,7 @@ import { Image } from "astro:assets";
   <WaveDivider colorAbove="gray" colorBelow="white" />
   <ProductShowcase
     title="Rucksäcke"
-    images={[Rucksack1, Rucksack2, Rucksack3]}
+    imageType="Rucksaecke"
     color="white"
     ctaHref="/rucksaecke"
     ctaLabel="Alle Rucksäcke ansehen"
@@ -64,7 +49,7 @@ import { Image } from "astro:assets";
   <WaveDivider colorAbove="white" colorBelow="gray" />
   <ProductShowcase
     title="Zwirnknöpfe"
-    images={[Knopf1, Knopf2, Knopf3]}
+    imageType="Knoepfe"
     color="gray"
     ctaHref="/knoepfe"
     ctaLabel="Alle Knöpfe ansehen"
@@ -72,7 +57,7 @@ import { Image } from "astro:assets";
   <WaveDivider colorAbove="gray" colorBelow="white" />
   <ProductShowcase
     title="Decken"
-    images={[Decke1, Decke2, Decke3]}
+    imageType="Decken"
     color="white"
     ctaHref="/decken"
     ctaLabel="Alle Decken ansehen"
@@ -80,7 +65,7 @@ import { Image } from "astro:assets";
   <WaveDivider colorAbove="white" colorBelow="gray" />
   <ProductShowcase
     title="Verschiedenes"
-    images={[Foto1, Foto2, Foto3]}
+    imageType="Verschiedenes"
     color="gray"
     ctaHref="/verschiedenes"
     ctaLabel="Alle ansehen"

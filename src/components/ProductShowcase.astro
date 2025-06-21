@@ -1,11 +1,10 @@
 ---
 import "../styles/global.css";
 import { Image } from "astro:assets";
-import Wood from "../images/wood.webp";
 
 interface Props {
   title: string;
-  images: ImageMetadata[];
+  imageType: string;
   color?: string;
   ctaHref?: string;
   ctaLabel?: string;
@@ -19,22 +18,56 @@ const colorMap = {
 
 const buttonColorMap = {
   gray: "bg-white",
-  white: "bg-gray-300",
+  white: "bg-gray-200",
 };
 
 const hoverColorMap = {
-  gray: "hover:bg-gray-300",
+  gray: "hover:bg-gray-200",
   white: "hover:bg-white",
 };
 
 const {
   title = "Titel",
-  images = [],
+  imageType = "Decken",
   color = "white",
   ctaHref = "#",
   ctaLabel = "Alle ansehen",
   loading = "lazy",
 } = Astro.props;
+
+let images: string[] = [];
+let imageImports: Record<string, () => Promise<{ default: string }>> = {};
+switch (imageType) {
+  case "Decken":
+    imageImports = import.meta.glob(
+      "/src/images/Decken-Homepage/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Knoepfe":
+    imageImports = import.meta.glob(
+      "/src/images/Knoepfe-Homepage/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Rucksaecke":
+    imageImports = import.meta.glob(
+      "/src/images/Rucksaecke-Homepage/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Taschen":
+    imageImports = import.meta.glob(
+      "/src/images/Taschen-Homepage/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Verschiedenes":
+    imageImports = import.meta.glob(
+      "/src/images/Verschiedenes-Homepage/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+}
+
+images = await Promise.all(
+  Object.values(imageImports).map((importFn) => importFn()),
+).then((modules) => modules.map((mod) => mod.default));
 ---
 
 <div
