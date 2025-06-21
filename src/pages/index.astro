@@ -19,7 +19,7 @@ import Knopf3 from "../images/Knoepfe-Homepage/Knopf3.jpg";
 import Foto1 from "../images/Verschiedenes-Homepage/Foto1.jpg";
 import Foto2 from "../images/Verschiedenes-Homepage/Foto2.jpg";
 import Foto3 from "../images/Verschiedenes-Homepage/Foto3.jpg";
-import HeroQuilt from "../images/Decken-Homepage/DeckeFront.jpg";
+import HeroImage from "../images/hero.jpg";
 import { Image } from "astro:assets";
 ---
 
@@ -37,52 +37,51 @@ import { Image } from "astro:assets";
     </div>
     <div class="flex-1 h-full items-end justify-center hidden xl:flex">
       <Image
-        src={HeroQuilt}
+        src={HeroImage}
         alt="Handmade quilt"
-        class="h-full w-full object-cover pt-20 2xl:pt-40"
+        class="h-full w-full object-cover pt-10 2xl:pt-20"
         loading="eager"
       />
     </div>
   </section>
-
   <div class="h-20"></div>
-  <WaveDivider colorAbove="white" colorBelow="blue" />
-  <ProductShowcase
-    title="Decken"
-    images={[Decke1, Decke2, Decke3]}
-    color="blue"
-    ctaHref="/decken"
-    ctaLabel="Alle Decken ansehen"
-  />
-  <WaveDivider colorAbove="blue" colorBelow="orange" />
-  <ProductShowcase
-    title="Rucksäcke"
-    images={[Rucksack1, Rucksack2, Rucksack3]}
-    color="orange"
-    ctaHref="/rucksaecke"
-    ctaLabel="Alle Rucksäcke ansehen"
-  />
-  <WaveDivider colorAbove="orange" colorBelow="blue" />
+  <WaveDivider colorAbove="white" colorBelow="gray" />
   <ProductShowcase
     title="Taschen"
     images={[Tasche1, Tasche2, Tasche3]}
-    color="blue"
+    color="gray"
     ctaHref="/taschen"
     ctaLabel="Alle Taschen ansehen"
   />
-  <WaveDivider colorAbove="blue" colorBelow="orange" />
+  <WaveDivider colorAbove="gray" colorBelow="white" />
+  <ProductShowcase
+    title="Rucksäcke"
+    images={[Rucksack1, Rucksack2, Rucksack3]}
+    color="white"
+    ctaHref="/rucksaecke"
+    ctaLabel="Alle Rucksäcke ansehen"
+  />
+  <WaveDivider colorAbove="white" colorBelow="gray" />
   <ProductShowcase
     title="Zwirnknöpfe"
     images={[Knopf1, Knopf2, Knopf3]}
-    color="orange"
+    color="gray"
     ctaHref="/knoepfe"
     ctaLabel="Alle Knöpfe ansehen"
   />
-  <WaveDivider colorAbove="orange" colorBelow="blue" />
+  <WaveDivider colorAbove="gray" colorBelow="white" />
+  <ProductShowcase
+    title="Decken"
+    images={[Decke1, Decke2, Decke3]}
+    color="white"
+    ctaHref="/decken"
+    ctaLabel="Alle Decken ansehen"
+  />
+  <WaveDivider colorAbove="white" colorBelow="gray" />
   <ProductShowcase
     title="Verschiedenes"
     images={[Foto1, Foto2, Foto3]}
-    color="blue"
+    color="gray"
     ctaHref="/verschiedenes"
     ctaLabel="Alle ansehen"
   />

@@ -13,24 +13,24 @@ interface Props {
 }
 
 const colorMap = {
-  orange: "bg-orange-50",
-  blue: "bg-blue-50",
+  gray: "bg-gray-100",
+  white: "bg-white",
 };
 
 const buttonColorMap = {
-  orange: "bg-orange-300",
-  blue: "bg-blue-300",
+  gray: "bg-white",
+  white: "bg-gray-300",
 };
 
 const hoverColorMap = {
-  orange: "hover:bg-orange-200",
-  blue: "hover:bg-blue-200",
+  gray: "hover:bg-gray-300",
+  white: "hover:bg-white",
 };
 
 const {
   title = "Titel",
   images = [],
-  color = "blue",
+  color = "white",
   ctaHref = "#",
   ctaLabel = "Alle ansehen",
   loading = "lazy",
@@ -38,7 +38,7 @@ const {
 ---
 
 <div
-  class={`flex flex-col w-full h-200 justify-between ${colorMap[color as keyof typeof colorMap]}`}
+  class={`flex flex-col w-full h-fit gap-10 py-10 justify-between ${colorMap[color as keyof typeof colorMap]}`}
 >
   <div class="flex-1/6 h-10 flex items-center justify-center">
     <h1 class="text-5xl font-pompiere tracking-widest">{title}</h1>
@@ -49,8 +49,7 @@ const {
       {
         images.map((img, i) => (
           <div
-            style={`background-image: url('${Wood.src}')`}
-            class={`bg-cover bg-center w-full xl:w-auto flex-1 p-4 rounded-2xl border-4 border-yellow-900 shadow-lg relative cursor-pointer hover:opacity-80
+            class={`w-full xl:w-auto flex-1 p-4 relative cursor-pointer hover:opacity-80
             ${i === 0 ? "" : "hidden xl:block"}`}
             onclick={`openModal('${title}','${i}')`}
           >
@@ -58,7 +57,7 @@ const {
               id={`img-${title}-${i}`}
               src={img}
               alt="Produktbild"
-              class="w-full h-full object-contain cursor-pointer rounded-xl z-100"
+              class="w-full h-full object-scale-down cursor-pointer z-100 border-1 border-black"
               loading={loading}
             />
           </div>
@@ -70,7 +69,7 @@ const {
   <div class="flex-1/6 h-10 flex items-center justify-center">
     <a
       href={ctaHref}
-      class={`px-6 py-3 ${buttonColorMap[color as keyof typeof buttonColorMap]} text-black rounded-lg shadow ${hoverColorMap[color as keyof typeof hoverColorMap]} tracking-wider transition-colors duration-200 text-2xl font-pompiere border`}
+      class={`px-6 py-3 ${buttonColorMap[color as keyof typeof buttonColorMap]} text-black shadow ${hoverColorMap[color as keyof typeof hoverColorMap]} tracking-wider transition-colors duration-200 text-2xl font-pompiere border`}
     >
       {ctaLabel}
     </a>

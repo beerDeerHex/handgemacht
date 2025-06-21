@@ -5,18 +5,16 @@ interface Props {
 }
 
 const bgColorMap = {
-  orange: "bg-orange-50",
-  blue: "bg-blue-50",
+  gray: "bg-gray-100",
   white: "bg-white",
 };
 
 const fillColorMap = {
-  orange: "fill-orange-50",
-  blue: "fill-blue-50",
+  gray: "fill-gray-100",
   white: "fill-white",
 };
 
-const { colorAbove = "blue", colorBelow = "blue" } = Astro.props;
+const { colorAbove = "gray", colorBelow = "gray" } = Astro.props;
 ---
 
 <div class="w-full h-10 relative overflow-hidden">
