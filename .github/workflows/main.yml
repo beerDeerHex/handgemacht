@@ -28,6 +28,7 @@ jobs:
       - name: Push to deployment repo
         run: |
           git config --global user.name "Stefan Wild"
+          git config --global user.email "wildstefan1221@gmail.com"
 
           git clone https://x-access-token:${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/beerDeerHex/handgemacht-deploy.git deploy-repo
 
