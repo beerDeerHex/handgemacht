@@ -62,41 +62,43 @@ images = await Promise.all(
   >
     <a
       href="/all"
-      class={`${Astro.url.pathname == "/all/" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      class={`${Astro.url.pathname == "/all/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
       >Alle Produkte</a
     >
     <a
       href="/bags"
-      class={`${Astro.url.pathname == "/bags/" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      class={`${Astro.url.pathname == "/bags/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
       >Taschen</a
     >
     <a
       href="/backpacks"
-      class={`${Astro.url.pathname == "/backpacks/" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      class={`${Astro.url.pathname == "/backpacks/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
       >Rucksäcke</a
     >
     <a
       href="/buttons"
-      class={`${Astro.url.pathname == "/buttons/" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      class={`${Astro.url.pathname == "/buttons/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
       >Zwirnknöpfe</a
     >
     <a
       href="/blankets"
-      class={`${Astro.url.pathname == "/blankets/" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      class={`${Astro.url.pathname == "/blankets/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
       >Decken</a
     >
     <a
       href="/misc"
-      class={`${Astro.url.pathname == "/misc/" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      class={`${Astro.url.pathname == "/misc/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
       >Verschiedenes</a
     >
   </div>
   <div class={`${desc === "" ? "flex-5/6" : "flex-7/12"} h-fit`}>
-    <div class={`grid ${desc === "" ? "grid-cols-2 xl:grid-cols-3" : "grid-cols-1 xl:grid-cols-2"} gap-6 p-4`}>
+    <div
+      class={`grid ${desc === "" ? "grid-cols-2 xl:grid-cols-3" : "grid-cols-1 xl:grid-cols-2"} gap-6 p-4`}
+    >
       {
         images.map((img, i) => (
           <div
-            class={`w-full flex-1 p-4 relative cursor-pointer hover:opacity-80`}
+            class={`w-full flex-1 p-3 relative cursor-pointer hover:opacity-80`}
             onclick={`openModal('${title}','${i}')`}
           >
             <Image
@@ -112,7 +114,7 @@ images = await Promise.all(
     </div>
   </div>
   <div
-    class={` ${desc === "" ? "hidden" : ""} border-s-1 border-gray-300 w-3/12 h-fit p-4 font-pompiere text-2xl justify-self-center tracking-wider text-justify`}
+    class={` ${desc === "" ? "hidden" : ""} border-s-1 border-gray-300 w-3/12 h-fit p-3 me-7 font-pompiere text-2xl justify-self-center tracking-wider text-justify`}
   >
     {desc}
   </div>
