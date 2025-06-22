@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import HeroImage from "../images/hero.jpg";
+import ImageModal from "../components/ImageModal.astro";
+---
+
+<Layout>
+  <div class="w-full h-fit py-8 flex items-center justify-center">
+    <div class="font-pompiere text-3xl flex-1/2 h-full ps-30">
+      Mein Name ist Claudia Wild – und meine große Leidenschaft gilt seit vielen
+      Jahren dem Patchwork, Quilten und dem kreativen Spiel mit Stoffen.
+      Besonders faszinieren mich traditionelle Handarbeitstechniken wie die
+      filigrane Seidenbändchenstickerei oder die kunstvolle Herstellung von
+      Zwirnknöpfen.<br />
+      <br /> Diese alten Handwerkskünste lasse ich gerne in moderne Designs einfließen
+      und kreiere daraus einzigartige, kreative Werke. Im Mittelpunkt meiner Arbeit
+      stehen Taschen – aus den verschiedensten Materialien und immer mit dem gewissen
+      Etwas. Keine Tasche gleicht der anderen: Jede ist ein Unikat, handgefertigt
+      mit viel Liebe zum Detail und Sorgfalt. So wird jede meiner Taschen zu einem
+      ganz persönlichen Begleiter für ihre Trägerin oder ihren Träger.<br />
+      <br /> Ich liebe es, kreative Ideen Wirklichkeit werden zu lassen – und bin
+      immer offen für individuelle Wünsche. Gemeinsam finden wir die passende Umsetzung
+      für deine ganz persönliche Vorstellung.
+    </div>
+    <div class="flex-1/2 h-fit items-center justify-center flex">
+      <Image
+        src={HeroImage}
+        alt="Handmade quilt"
+        class="h-full w-130 object-cover"
+        loading="eager"
+      />
+    </div>
+  </div>
+  <div
+    class="pt-5 w-10/12 justify-self-center border-b-1 border-gray-300 font-pompiere text-3xl"
+  >
+    Wo meine Ideen Gestalt annehmen
+  </div>
+  <div
+    class="w-10/12 py-10 h-fit flex flex-row gap-25 justify-center justify-self-center"
+  >
+    <div
+      class={`w-full xl:w-auto flex-1 relative cursor-pointer hover:opacity-80`}
+      onclick={`openModal('work','0')`}
+    >
+      <Image
+        id="img-work-0"
+        src={HeroImage}
+        alt="Produktbild"
+        class="w-80 h-full object-scale-down cursor-pointer z-100 border-1 border-black"
+        loading="lazy"
+      />
+    </div>
+    <div
+      class={`w-full xl:w-auto flex-1 relative cursor-pointer hover:opacity-80`}
+      onclick={`openModal('work','1')`}
+    >
+      <Image
+        id="img-work-1"
+        src={HeroImage}
+        alt="Produktbild"
+        class="w-80 h-full object-scale-down cursor-pointer z-100 border-1 border-black"
+        loading="lazy"
+      />
+    </div>
+    <div
+      class={`w-full xl:w-auto flex-1 relative cursor-pointer hover:opacity-80`}
+      onclick={`openModal('work','2')`}
+    >
+      <Image
+        id="img-work-2"
+        src={HeroImage}
+        alt="Produktbild"
+        class="w-80 h-full object-scale-down cursor-pointer z-100 border-1 border-black"
+        loading="lazy"
+      />
+    </div>
+    <div
+      class={`w-full xl:w-auto flex-1 relative cursor-pointer hover:opacity-80`}
+      onclick={`openModal('work','3')`}
+    >
+      <Image
+        id="img-work-3"
+        src={HeroImage}
+        alt="Produktbild"
+        class="w-80 h-full object-scale-down cursor-pointer z-100 border-1 border-black"
+        loading="lazy"
+      />
+    </div>
+  </div>
+  <ImageModal numOfPictures={4} />
+</Layout>
