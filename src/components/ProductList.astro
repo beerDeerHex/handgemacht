@@ -1,0 +1,120 @@
+---
+import { Image } from "astro:assets";
+import ImageModal from "./ImageModal.astro";
+
+interface Props {
+  title: string;
+  desc?: string;
+  imageType: string;
+}
+
+const { title = "Titel", desc = "", imageType = "Decken" } = Astro.props;
+
+let images: string[] = [];
+let imageImports: Record<string, () => Promise<{ default: string }>> = {};
+switch (imageType) {
+  case "Decken":
+    imageImports = import.meta.glob(
+      "/src/images/Decken/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Knoepfe":
+    imageImports = import.meta.glob(
+      "/src/images/Knoepfe/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Rucksaecke":
+    imageImports = import.meta.glob(
+      "/src/images/Rucksaecke/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Taschen":
+    imageImports = import.meta.glob(
+      "/src/images/Taschen/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Verschiedenes":
+    imageImports = import.meta.glob(
+      "/src/images/Verschiedenes/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+  case "Alle":
+    imageImports = import.meta.glob(
+      "/src/images/*/*.{jpeg,jpg,png,gif}",
+    ) as Record<string, () => Promise<{ default: string }>>;
+    break;
+}
+
+images = await Promise.all(
+  Object.values(imageImports).map((importFn) => importFn()),
+).then((modules) => modules.map((mod) => mod.default));
+---
+
+<div
+  class="w-full h-fit py-8 flex items-center justify-center font-pompiere text-4xl tracking-wider"
+>
+  {title}
+</div>
+<div class="w-11/12 justify-self-center border-b-1 border-gray-300"></div>
+<div class="w-full pt-3 h-fit flex-row flex">
+  <div
+    class="flex-1/6 pt-3 mb-3 border-e-1 border-gray-300 flex flex-col items-top gap-2"
+  >
+    <a
+      href="/all"
+      class={`${Astro.url.pathname == "/all" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      >Alle Produkte</a
+    >
+    <a
+      href="/bags"
+      class={`${Astro.url.pathname == "/bags" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      >Taschen</a
+    >
+    <a
+      href="/backpacks"
+      class={`${Astro.url.pathname == "/backpacks" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      >Rucksäcke</a
+    >
+    <a
+      href="/buttons"
+      class={`${Astro.url.pathname == "/buttons" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      >Zwirnknöpfe</a
+    >
+    <a
+      href="/blankets"
+      class={`${Astro.url.pathname == "/blankets" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      >Decken</a
+    >
+    <a
+      href="/misc"
+      class={`${Astro.url.pathname == "/misc" ? "text-blue-300 font-bold" : ""} self-center font-pompiere text-2xl w-fit text-center hover:border-b-1 hover:border-gray-300 `}
+      >Verschiedenes</a
+    >
+    <div
+      class={` ${desc === "" ? "hidden" : ""} w-fit h-fit mt-5 p-3 bg-blue-50 border-1 ms-2 me-2 shadow font-pompiere text-2xl rounded-2xl`}
+    >
+      {desc}
+    </div>
+  </div>
+  <div class="flex-5/6 h-fit">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 p-4">
+      {
+        images.map((img, i) => (
+          <div
+            class={`w-full flex-1 p-4 relative cursor-pointer hover:opacity-80`}
+            onclick={`openModal('${title}','${i}')`}
+          >
+            <Image
+              id={`img-${title}-${i}`}
+              src={img}
+              alt="Produktbild"
+              class="w-full h-full object-scale-down cursor-pointer z-100 border-1 border-black"
+              loading={i < 6 ? "eager" : "lazy"}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+<ImageModal numOfPictures={images.length} />
