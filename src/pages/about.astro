@@ -3,26 +3,34 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import HeroImage from "../images/hero.jpg";
 import ImageModal from "../components/ImageModal.astro";
+
+let images: string[] = [];
+let imageImports: Record<string, () => Promise<{ default: string }>> = {};
+imageImports = import.meta.glob(
+  "/src/images/Arbeitsplatz/*.{jpeg,jpg,png,gif}",
+) as Record<string, () => Promise<{ default: string }>>;
+
+images = await Promise.all(
+  Object.values(imageImports).map((importFn) => importFn()),
+).then((modules) => modules.map((mod) => mod.default));
 ---
 
 <Layout>
   <div
-    class="w-full h-fit py-8 flex flex-col md:flex-row items-center justify-center gap-6"
+    class="w-full h-fit py-8 flex flex-col md:flex-row items-center justify-center"
   >
-    <!-- Main Image First on Mobile -->
     <div
       class="flex-shrink-0 flex justify-center items-center w-full md:w-1/2 mb-4 md:mb-0"
     >
       <Image
         src={HeroImage}
         alt="Handmade quilt"
-        class="w-40 h-40 md:w-130 md:h-full object-cover rounded"
+        class="w-50 md:w-130 md:h-full object-cover rounded"
         loading="eager"
       />
     </div>
-    <!-- Text Second -->
     <div
-      class="font-pompiere text-xl md:text-3xl w-full md:w-1/2 h-full px-4 md:ps-30"
+      class="font-pompiere text-center lg:text-left text-2xl md:text-3xl w-full md:w-1/2 h-full px-4 md:pe-30"
     >
       Mein Name ist Claudia Wild und meine große Leidenschaft gilt seit vielen
       Jahren dem Patchwork, Quilten und dem kreativen Spiel mit Stoffen.
@@ -51,21 +59,21 @@ import ImageModal from "../components/ImageModal.astro";
     class="w-11/12 py-10 h-fit flex flex-col md:flex-row gap-6 md:gap-25 justify-center mx-auto"
   >
     {
-      [0, 1, 2, 3].map((i) => (
+      images.map((img, i) => (
         <div
           class="w-full md:w-auto flex-1 relative cursor-pointer hover:opacity-80 flex justify-center"
           onclick={`openModal('work','${i}')`}
         >
           <Image
             id={`img-work-${i}`}
-            src={HeroImage}
+            src={img}
             alt="Produktbild"
-            class="w-40 h-40 md:w-80 md:h-full object-scale-down cursor-pointer border-1 border-black"
+            class="w-60 md:w-160 md:h-full object-scale-down cursor-pointer border-1 border-black"
             loading="lazy"
           />
         </div>
       ))
     }
   </div>
-  <ImageModal numOfPictures={4} />
+  <ImageModal numOfPictures={4} numOfPicturesMobile={4} />
 </Layout>

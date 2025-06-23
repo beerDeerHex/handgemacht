@@ -1,25 +1,25 @@
 ---
 interface Props {
   numOfPictures: number;
+  numOfPicturesMobile: number;
 }
 
-const { numOfPictures = 0 } = Astro.props;
+const { numOfPictures = 0, numOfPicturesMobile = 0 } = Astro.props;
 ---
 
 <!-- Modal (Global) -->
 <div
   id="modal"
   class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center hidden"
-  onclick="if(event.target === this) closeModal()"
 >
   <button
     onclick="closeModal()"
-    class="absolute top-4 right-4 text-white text-6xl font-bold cursor-pointer"
+    class="absolute top-4 right-4 text-white lg:text-6xl text-4xl font-bold cursor-pointer"
     >×</button
   >
   <img
     id="modal-img"
-    class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
+    class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain z-100"
     src=""
     alt="Modal image"
   />
@@ -33,12 +33,24 @@ const { numOfPictures = 0 } = Astro.props;
     class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-6xl font-bold px-3 hover:scale-110 transition cursor-pointer hidden xl:block"
     >→</button
   >
+
+  <!-- Toast Help Message -->
+  <div
+    id="swipe-toast"
+    class="absolute bottom-4 text-white bg-black/80 text-sm px-4 py-2 rounded-full opacity-0 transition-opacity duration-500"
+  >
+    Swipe left/right to switch images
+  </div>
 </div>
 
 <!-- Modal Script -->
-<script is:inline define:vars={{ numOfPictures }}>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"
+></script>
+<script is:inline define:vars={{ numOfPictures, numOfPicturesMobile }}>
   let currentIdx = 0;
   let currentTag = "";
+  let showedToast = false;
+  let actualNumOfPictures = 0;
 
   const modal = document.getElementById("modal");
   const modalImg = document.getElementById("modal-img");
@@ -49,20 +61,38 @@ const { numOfPictures = 0 } = Astro.props;
     updateImgSrc();
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden";
+
+    // Show swipe toast help message on mobile only
+    const isMobile = window.innerWidth < 768;
+    const toast = document.getElementById("swipe-toast");
+
+    if (isMobile && toast && !showedToast && actualNumOfPictures > 1) {
+      toast.style.opacity = "1";
+      showedToast = true;
+
+      // Fade out after 4 seconds
+      setTimeout(() => {
+        toast.style.opacity = "0";
+      }, 2000);
+    }
   }
 
   function closeModal() {
-    modal.classList.add("hidden");
-    document.body.style.overflow = "";
+    // Prevent further event bubbling / accidental triggers
+    setTimeout(() => {
+      modal.classList.add("hidden");
+      document.body.style.overflow = "";
+      showedToast = false;
+    }, 10);
   }
 
   function prevImage() {
-    currentIdx = (currentIdx - 1 + numOfPictures) % numOfPictures;
+    currentIdx = (currentIdx - 1 + actualNumOfPictures) % actualNumOfPictures;
     updateImgSrc();
   }
 
   function nextImage() {
-    currentIdx = (currentIdx + 1) % numOfPictures;
+    currentIdx = (currentIdx + 1) % actualNumOfPictures;
     updateImgSrc();
   }
 
@@ -76,6 +106,36 @@ const { numOfPictures = 0 } = Astro.props;
     if (e.key === "Escape") closeModal();
     if (e.key === "ArrowLeft") prevImage();
     if (e.key === "ArrowRight") nextImage();
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      actualNumOfPictures = numOfPicturesMobile;
+      console.log("Num Of Pictures " + actualNumOfPictures);
+    } else {
+      actualNumOfPictures = numOfPictures;
+      console.log("Num Of Pictures " + actualNumOfPictures);
+    }
+
+    if (typeof Hammer !== "undefined") {
+      const hammerImg = new Hammer(modalImg);
+      hammerImg.on("swipeleft", () => {
+        console.log("Swipe left");
+        nextImage();
+      });
+      hammerImg.on("swiperight", () => {
+        console.log("Swipe right");
+        prevImage();
+      });
+      const hammerModal = new Hammer(modal);
+      hammerModal.on("tap", (ev) => {
+        if (ev.target === modal) {
+          console.log("Tap on background → close");
+          closeModal(); // Use the native DOM event
+        }
+      });
+    }
   });
 
   // Expose functions globally

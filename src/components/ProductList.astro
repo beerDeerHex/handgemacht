@@ -15,32 +15,32 @@ let imageImports: Record<string, () => Promise<{ default: string }>> = {};
 switch (imageType) {
   case "Decken":
     imageImports = import.meta.glob(
-      "/src/images/Decken/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Decken/*.{jpeg,jpg,png,gif}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Knoepfe":
     imageImports = import.meta.glob(
-      "/src/images/Knoepfe/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Knoepfe/*.{jpeg,jpg,png,gif}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Rucksaecke":
     imageImports = import.meta.glob(
-      "/src/images/Rucksaecke/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Rucksaecke/*.{jpeg,jpg,png,gif}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Taschen":
     imageImports = import.meta.glob(
-      "/src/images/Taschen/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Taschen/*.{jpeg,jpg,png,gif}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Verschiedenes":
     imageImports = import.meta.glob(
-      "/src/images/Verschiedenes/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Verschiedenes/*.{jpeg,jpg,png,gif}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Alle":
     imageImports = import.meta.glob(
-      "/src/images/*/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/*/*.{jpeg,jpg,png,gif}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
 }
@@ -119,4 +119,4 @@ images = await Promise.all(
     {desc}
   </div>
 </div>
-<ImageModal numOfPictures={images.length} />
+<ImageModal numOfPictures={images.length} numOfPicturesMobile={images.length} />
