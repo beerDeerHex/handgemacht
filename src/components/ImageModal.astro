@@ -12,6 +12,12 @@ const { numOfPictures = 0, numOfPicturesMobile = 0 } = Astro.props;
   id="modal"
   class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center hidden"
 >
+  <div
+    id="image-counter"
+    class="absolute top-4 left-4 text-white bg-black/60 text-base px-3 py-1 rounded-full z-50"
+    style="pointer-events: none;"
+  >
+  </div>
   <button
     onclick="closeModal()"
     class="absolute top-4 right-4 text-white lg:text-6xl text-4xl font-bold cursor-pointer"
@@ -99,6 +105,11 @@ const { numOfPictures = 0, numOfPicturesMobile = 0 } = Astro.props;
   function updateImgSrc() {
     let id = "img-" + currentTag + "-" + currentIdx;
     modalImg.src = document.getElementById(id).src;
+
+    const counter = document.getElementById("image-counter");
+    if (counter) {
+      counter.textContent = `${Number(currentIdx) + 1} / ${Number(actualNumOfPictures)}`;
+    }
   }
 
   // Optional: Close on Escape
