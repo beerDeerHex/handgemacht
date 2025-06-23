@@ -14,30 +14,34 @@ import "../styles/global.css";
     </div>
     <div class="flex-1">
       <div class="flex justify-end gap-7">
-        <a
-          class={`text-xl md:text-xl xl:text-2xl 2xl:text-3xl font-pompiere 
-          tracking-wider hover:border-b-1 hover:border-gray-300
-          ${Astro.url.pathname == "/all/" || Astro.url.pathname == "/bags/" || Astro.url.pathname == "/backpacks/" || Astro.url.pathname == "/buttons/" || Astro.url.pathname == "/blankets/" || Astro.url.pathname == "/misc/" ? "border-gray-700 border-b-1" : ""}`}
-          href="/all">Alle Produkte</a
-        >
-        <a
-          class={`text-xl md:text-xl xl:text-2xl 2xl:text-3xl font-pompiere 
-          tracking-wider hover:border-b-1 hover:border-gray-300
-          ${Astro.url.pathname == "/about/" ? "border-gray-700 border-b-1" : ""}`}
-          href="/about">Über mich</a
-        >
-        <a
-          class={`text-xl md:text-xl xl:text-2xl 2xl:text-3xl font-pompiere 
-          tracking-wider hover:border-b-1 hover:border-gray-300
-          ${Astro.url.pathname == "/contact/" ? "border-gray-700 border-b-1" : ""}`}
-          href="/contact">Kontakt</a
-        >
-        <a
-          class={`text-xl md:text-xl xl:text-2xl 2xl:text-3xl font-pompiere 
-          tracking-wider hover:border-b-1 hover:border-gray-300
-          ${Astro.url.pathname == "/events/" ? "border-gray-700 border-b-1" : ""}`}
-          href="/events">Veranstaltungen</a
-        >
+        {
+          [
+            {
+              href: "/all",
+              label: "Alle Produkte",
+              paths: [
+                "/all/",
+                "/bags/",
+                "/backpacks/",
+                "/buttons/",
+                "/blankets/",
+                "/misc/",
+              ],
+            },
+            { href: "/about", label: "Über mich", paths: ["/about/"] },
+            { href: "/contact", label: "Kontakt", paths: ["/contact/"] },
+            { href: "/events", label: "Veranstaltungen", paths: ["/events/"] },
+          ].map(({ href, label, paths }) => (
+            <a
+              class={`text-xl md:text-xl xl:text-2xl 2xl:text-3xl font-pompiere 
+              tracking-wider hover:border-b-1 hover:border-gray-300
+              ${paths.includes(Astro.url.pathname) ? "border-gray-700 border-b-1" : ""}`}
+              href={href}
+            >
+              {label}
+            </a>
+          ))
+        }
         <div class="justify-self-end flex justify-end">
           <a
             href="https://www.facebook.com/HandgemachtClaudiaWild"
@@ -118,38 +122,35 @@ import "../styles/global.css";
     </div>
     <div class="items-center justify-between w-full hidden" id="mobile-menu">
       <ul class="flex flex-col mt-4 font-medium">
-        <li>
-          <a
-            href="/all"
-            class={`block py-2 pl-3 pr-4 text-xl font-pompiere  border-b border-gray-100 hover:bg-gray-50
-            ${Astro.url.pathname == "/all/" || Astro.url.pathname == "/bags/" || Astro.url.pathname == "/backpacks/" || Astro.url.pathname == "/buttons/" || Astro.url.pathname == "/blankets/" || Astro.url.pathname == "/misc/" ? "text-blue-300 font-bold" : "text-gray-700"}`}
-            >Alle Produkte</a
-          >
-        </li>
-        <li>
-          <a
-            href="/about"
-            class={`block py-2 pl-3 pr-4 text-xl font-pompiere border-b border-gray-100 hover:bg-gray-50
-            ${Astro.url.pathname == "/about/" ? "text-blue-300 font-bold" : "text-gray-700"}`}
-            >Über mich</a
-          >
-        </li>
-        <li>
-          <a
-            href="/contact"
-            class={`block py-2 pl-3 pr-4 text-xl font-pompiere border-b border-gray-100 hover:bg-gray-50
-            ${Astro.url.pathname == "/contact/" ? "text-blue-300 font-bold" : "text-gray-700"}`}
-            >Kontakt</a
-          >
-        </li>
-        <li>
-          <a
-            href="/events"
-            class={`block py-2 pl-3 pr-4 text-xl font-pompiere border-b border-gray-100 hover:bg-gray-50
-            ${Astro.url.pathname == "/events/" ? "text-blue-300 font-bold" : "text-gray-700"}`}
-            >Veranstaltungen</a
-          >
-        </li>
+        {
+          [
+            {
+              href: "/all",
+              label: "Alle Produkte",
+              paths: [
+                "/all/",
+                "/bags/",
+                "/backpacks/",
+                "/buttons/",
+                "/blankets/",
+                "/misc/",
+              ],
+            },
+            { href: "/about", label: "Über mich", paths: ["/about/"] },
+            { href: "/contact", label: "Kontakt", paths: ["/contact/"] },
+            { href: "/events", label: "Veranstaltungen", paths: ["/events/"] },
+          ].map(({ href, label, paths }) => (
+            <li>
+              <a
+                class={`block py-2 pl-3 pr-4 text-xl font-pompiere  border-b border-gray-100 hover:bg-gray-50
+                ${paths.includes(Astro.url.pathname) ? "text-blue-300 font-bold" : "text-gray-700"}`}
+                href={href}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
         <li>
           <a
             href="https://www.facebook.com/HandgemachtClaudiaWild"

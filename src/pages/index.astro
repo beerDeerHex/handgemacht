@@ -30,45 +30,52 @@ import { Image } from "astro:assets";
     </div>
   </section>
   <div class="xl:h-20"></div>
-  <WaveDivider colorAbove="white" colorBelow="gray" />
-  <ProductShowcase
-    title="Taschen"
-    imageType="Taschen"
-    color="gray"
-    ctaHref="/bags"
-    ctaLabel="Alle Taschen ansehen"
-  />
-  <WaveDivider colorAbove="gray" colorBelow="white" />
-  <ProductShowcase
-    title="Rucksäcke"
-    imageType="Rucksaecke"
-    color="white"
-    ctaHref="/backpacks"
-    ctaLabel="Alle Rucksäcke ansehen"
-  />
-  <WaveDivider colorAbove="white" colorBelow="gray" />
-  <ProductShowcase
-    title="Zwirnknöpfe"
-    imageType="Knoepfe"
-    color="gray"
-    ctaHref="/buttons"
-    ctaLabel="Alle Knöpfe ansehen"
-  />
-  <WaveDivider colorAbove="gray" colorBelow="white" />
-  <ProductShowcase
-    title="Decken"
-    imageType="Decken"
-    color="white"
-    ctaHref="/blankets"
-    ctaLabel="Alle Decken ansehen"
-  />
-  <WaveDivider colorAbove="white" colorBelow="gray" />
-  <ProductShowcase
-    title="Verschiedenes"
-    imageType="Verschiedenes"
-    color="gray"
-    ctaHref="/misc"
-    ctaLabel="Alle ansehen"
-  />
+
+  {
+    [
+      {
+        title: "Taschen",
+        imageType: "Taschen",
+        ctaHref: "/bags",
+        ctaLabel: "Alle Taschen ansehen",
+      },
+      {
+        title: "Rucksäcke",
+        imageType: "Rucksaecke",
+        ctaHref: "/backpacks",
+        ctaLabel: "Alle Rucksäcke ansehen",
+      },
+      {
+        title: "Zwirnknöpfe",
+        imageType: "Knoepfe",
+        ctaHref: "/buttons",
+        ctaLabel: "Alle Knöpfe ansehen",
+      },
+      {
+        title: "Decken",
+        imageType: "Decken",
+        ctaHref: "/blankets",
+        ctaLabel: "Alle Decken ansehen",
+      },
+      {
+        title: "Verschiedenes",
+        imageType: "Verschiedenes",
+        ctaHref: "/misc",
+        ctaLabel: "Alles ansehen",
+      },
+    ].map(({ title, imageType, ctaHref, ctaLabel }, i) => (
+      <WaveDivider
+        colorAbove={`${i % 2 === 0 ? "white" : "gray"}`}
+        colorBelow={`${i % 2 === 0 ? "gray" : "white"}`}
+        />
+      <ProductShowcase
+        title={title}
+        imageType={imageType}
+        color={`${i % 2 === 0 ? "gray" : "white"}`}
+        ctaHref={ctaHref}
+        ctaLabel={ctaLabel}
+      />
+    ))
+  }
   <ImageModal numOfPictures={3} numOfPicturesMobile={1} />
 </Layout>

@@ -12,6 +12,7 @@ const { title = "Titel", desc = "", imageType = "Decken" } = Astro.props;
 
 let images: string[] = [];
 let imageImports: Record<string, () => Promise<{ default: string }>> = {};
+
 switch (imageType) {
   case "Decken":
     imageImports = import.meta.glob(
@@ -50,55 +51,50 @@ images = await Promise.all(
 ).then((modules) => modules.map((mod) => mod.default));
 ---
 
+<!-- Title -->
 <div
-  class="w-full h-fit py-8 flex items-center justify-center font-pompiere text-4xl tracking-wider"
+  class="w-full py-6 text-center font-pompiere text-3xl sm:text-4xl tracking-wider"
 >
   {title}
 </div>
-<div class="w-11/12 justify-self-center border-b-1 border-gray-300"></div>
-<div class="w-full pt-3 h-fit flex-row flex">
-  <div
-    class="flex-1/6 pt-3 mb-3 border-e-1 border-gray-300 flex flex-col items-top gap-2"
+<div class="w-11/12 mx-auto border-b border-gray-300"></div>
+
+<!-- Layout -->
+<div class="w-full flex flex-col lg:flex-row pt-4 px-4 sm:px-6 lg:px-12">
+  <nav
+    class="grid grid-cols-2 gap-3 text-lg sm:text-xl lg:text-2xl font-pompiere items-center mb-5
+           lg:flex lg:flex-col lg:w-1/8 lg:border-e lg:border-gray-300 lg:gap-3"
   >
-    <a
-      href="/all"
-      class={`${Astro.url.pathname == "/all/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
-      >Alle Produkte</a
-    >
-    <a
-      href="/bags"
-      class={`${Astro.url.pathname == "/bags/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
-      >Taschen</a
-    >
-    <a
-      href="/backpacks"
-      class={`${Astro.url.pathname == "/backpacks/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
-      >Rucksäcke</a
-    >
-    <a
-      href="/buttons"
-      class={`${Astro.url.pathname == "/buttons/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
-      >Zwirnknöpfe</a
-    >
-    <a
-      href="/blankets"
-      class={`${Astro.url.pathname == "/blankets/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
-      >Decken</a
-    >
-    <a
-      href="/misc"
-      class={`${Astro.url.pathname == "/misc/" ? "text-blue-300 font-bold" : ""} ms-20 self-start font-pompiere text-2xl w-fit text-start hover:border-b-1 hover:border-gray-300 `}
-      >Verschiedenes</a
-    >
-  </div>
-  <div class={`${desc === "" ? "flex-5/6" : "flex-7/12"} h-fit`}>
+    {
+      [
+        { href: "/all", label: "Alle Produkte" },
+        { href: "/bags", label: "Taschen" },
+        { href: "/backpacks", label: "Rucksäcke" },
+        { href: "/buttons", label: "Zwirnknöpfe" },
+        { href: "/blankets", label: "Decken" },
+        { href: "/misc", label: "Verschiedenes" },
+      ].map(({ href, label }) => (
+        <a
+          href={href}
+          class={`w-fit text-center justify-self-center ${
+            Astro.url.pathname === href + "/" ? "text-blue-400 font-bold" : ""
+          } hover:border-b border-gray-300`}
+        >
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <!-- Image Grid -->
+  <div class={`flex-1 ${desc ? "lg:w-7/8" : "lg:w-5/8"}`}>
     <div
-      class={`grid ${desc === "" ? "grid-cols-2 xl:grid-cols-3" : "grid-cols-1 xl:grid-cols-2"} gap-6 p-4`}
+      class={`grid grid-cols-1 sm:grid-cols-2 ${desc ? "xl:grid-cols-2" : "xl:grid-cols-3"} gap-3 px-6 pb-3`}
     >
       {
         images.map((img, i) => (
           <div
-            class={`w-full flex-1 p-3 relative cursor-pointer hover:opacity-80`}
+            class="w-full p-2 cursor-pointer transition hover:opacity-80"
             onclick={`openModal('${title}','${i}')`}
           >
             <Image
@@ -113,10 +109,16 @@ images = await Promise.all(
       }
     </div>
   </div>
-  <div
-    class={` ${desc === "" ? "hidden" : ""} border-s-1 border-gray-300 w-3/12 h-fit p-3 me-7 font-pompiere text-2xl justify-self-center tracking-wider text-justify`}
-  >
-    {desc}
-  </div>
+
+  <!-- Description -->
+  {
+    desc && (
+      <div class="lg:w-2/8 border-t lg:border-t-0 lg:border-l border-gray-300 pt-4 lg:pt-0 lg:pl-6 font-pompiere text-xl lg:text-2xl tracking-wide leading-relaxed text-justify mb-5">
+        {desc}
+      </div>
+    )
+  }
 </div>
+
+<!-- Modal Component -->
 <ImageModal numOfPictures={images.length} numOfPicturesMobile={images.length} />
