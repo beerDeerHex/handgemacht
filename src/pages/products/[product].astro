@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProductList from "../../components/ProductList.astro";
+
+const { product } = Astro.params;
+
+type Product = "all" | "backpacks" | "bags" | "blankets" | "buttons" | "misc";
+
+const data: Record<
+  Product,
+  { title: string; desc?: string; imageType: string }
+> = {
+  all: {
+    title: "Alle Produkte",
+    imageType: "Alle",
+  },
+  backpacks: {
+    title: "Rucksäcke",
+    desc: `Bei mir findest du ganz unterschiedliche Rucksäcke – von großen Raumwundern bis hin zu wandelbaren Rucksacktaschen, die sich im Handumdrehen in eine Umhängetasche verwandeln lassen.
+    Ich arbeite mit verschiedensten Materialien wie Leder, Kunstleder, Jeans oder Baumwolle – und besonders gern mit recycelten Stoffen, die ihren ganz eigenen Charme mitbringen. Natürlich fertige ich auch nach Wunsch an: Wer einen Lieblingsstoff mitbringt, bekommt ein echtes Unikat mit persönlicher Note – oft sogar mit Erinnerungswert.`,
+    imageType: "Rucksaecke",
+  },
+  bags: {
+    title: "Taschen",
+    desc: `Taschen sind meine Leidenschaft! Jede wird mit viel Liebe und in
+      Handarbeit gefertigt – aus verschiedensten Stoffen und in allen Größen.
+      Ich probiere ständig neue Schnitte aus, deshalb ist meine Auswahl so
+      vielseitig. Alte Riemen oder Beschläge verwende ich gern weiter – so
+      entstehen Unikate mit Charakter und ganz nebenbei ein Beitrag zur
+      Nachhaltigkeit.`,
+    imageType: "Taschen",
+  },
+  blankets: {
+    title: "Decken",
+    desc: `Es gibt viele Arten von Decken, die man nähen kann – besonders am Herzen liegen mir Erinnerungsdecken. Dafür verwende ich Stoffe, die eine persönliche Bedeutung für den oder die Beschenkte haben: Lieblings-T-Shirts, alte Kleider, Hosen oder sogar gestrickte Stücke wie Omas Handschuhe. Diese Schätze werden behutsam in die Decke eingearbeitet. Wie genau das aussieht, besprechen wir gemeinsam. Auch Babydecken sind kleine Herzensprojekte. Farbe, Größe, Muster – alles wird individuell abgestimmt, damit am Ende eine ganz persönliche Decke entsteht. Da solche Stücke viel Zeit und Liebe brauchen, fertige ich sie ausschließlich auf Auftrag an.`,
+    imageType: "Decken",
+  },
+  buttons: {
+    title: "Zwirnknöpfe",
+    desc: `Zwirnknöpfe sind ein altes Handwerk, das ursprünglich vor allem für Bettwäsche genutzt wurde – traditionell in Weiß und mit festem Zwirn gewickelt. Heute erlebt diese Technik ein farbenfrohes Comeback: mit buntem Garn und modernen Mustern. Ich habe das Wickeln in einem Kurs gelernt – und war sofort begeistert! Seitdem entstehen immer wieder neue, liebevoll gefertigte Knöpfe. Aus den schönsten mache ich Schmuck, der perfekt zur Tracht passt, aber dank moderner Designs auch im Alltag stilvoll getragen werden kann. Außerdem nutze ich die Knöpfe gerne, um meinen handgemachten Stücken das gewisse Etwas zu verleihen.`,
+    imageType: "Knoepfe",
+  },
+  misc: {
+    title: "Verschiedenes",
+    desc: `Ich fertige auch liebevolle Kleinigkeiten aller Art – zum Beispiel Geldtaschen, Organizer, kleine Täschchen, Bilderrahmen oder Einbände für Alben und Bilder. Die Möglichkeiten sind fast endlos – ideal als kleines Geschenk oder Mitbringsel für sich selbst oder einen besonderen Menschen. Und wenn jemand eine ganz persönliche Idee oder ein besonderes Wunschgeschenk im Kopf hat, setze ich diese Vorstellung gerne mit viel Sorgfalt und Kreativität um.`,
+    imageType: "Verschiedenes",
+  },
+};
+
+const page = data[product as Product];
+
+if (!page) {
+  throw new Error(`Unknown product category: ${product}`);
+}
+
+export async function getStaticPaths() {
+  return [
+    { params: { product: "all" } },
+    { params: { product: "backpacks" } },
+    { params: { product: "bags" } },
+    { params: { product: "blankets" } },
+    { params: { product: "buttons" } },
+    { params: { product: "misc" } },
+  ];
+}
+---
+
+<Layout>
+  <ProductList title={page.title} desc={page.desc} imageType={page.imageType} />
+</Layout>

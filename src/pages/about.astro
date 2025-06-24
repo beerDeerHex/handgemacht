@@ -7,7 +7,7 @@ import ImageModal from "../components/ImageModal.astro";
 let images: string[] = [];
 let imageImports: Record<string, () => Promise<{ default: string }>> = {};
 imageImports = import.meta.glob(
-  "/src/images/Arbeitsplatz/*.{jpeg,jpg,png,gif}",
+  "/src/images/Arbeitsplatz/*.{jpeg,jpg,png,gif,JPG}",
 ) as Record<string, () => Promise<{ default: string }>>;
 
 images = await Promise.all(
@@ -25,7 +25,7 @@ images = await Promise.all(
       <Image
         src={HeroImage}
         alt="Handmade quilt"
-        class="w-50 md:w-130 md:h-full object-cover rounded"
+        class="w-50 md:w-130 md:h-full object-cover rounded pb-4"
         loading="eager"
       />
     </div>
@@ -54,26 +54,30 @@ images = await Promise.all(
   >
     Wo meine Ideen Gestalt annehmen
   </div>
-  <!-- Four Images Last -->
+  <!-- Six Images Last -->
   <div
-    class="w-11/12 py-10 h-fit flex flex-col md:flex-row gap-6 md:gap-25 justify-center mx-auto"
+    class="w-10/12 py-10 h-fit flex flex-col gap-6 justify-center mx-auto
+      md:grid md:grid-cols-3 md:grid-rows-2 md:flex-none"
   >
     {
       images.map((img, i) => (
         <div
-          class="w-full md:w-auto flex-1 relative cursor-pointer hover:opacity-80 flex justify-center"
+          class="w-full flex-1 relative cursor-pointer hover:opacity-80 flex justify-center"
           onclick={`openModal('work','${i}')`}
         >
           <Image
             id={`img-work-${i}`}
             src={img}
             alt="Produktbild"
-            class="w-60 md:w-160 md:h-full object-scale-down cursor-pointer border-1 border-black"
+            class="w-full object-contain cursor-pointer border-1 border-black"
             loading="lazy"
           />
         </div>
       ))
     }
   </div>
-  <ImageModal numOfPictures={4} numOfPicturesMobile={4} />
+  <ImageModal
+    numOfPictures={images.length}
+    numOfPicturesMobile={images.length}
+  />
 </Layout>

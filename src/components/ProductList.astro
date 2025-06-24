@@ -16,32 +16,32 @@ let imageImports: Record<string, () => Promise<{ default: string }>> = {};
 switch (imageType) {
   case "Decken":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Decken/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Decken/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Knoepfe":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Knoepfe/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Knoepfe/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Rucksaecke":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Rucksaecke/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Rucksaecke/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Taschen":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Taschen/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Taschen/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Verschiedenes":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Verschiedenes/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Verschiedenes/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Alle":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/*/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/*/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
 }
@@ -52,27 +52,19 @@ images = await Promise.all(
 ---
 
 <!-- Title -->
-<div
-  class="w-full lg:py-6 py-3 text-center font-pompiere text-2xl lg:text-4xl tracking-wider"
->
-  {title}
-</div>
-<div class="w-11/12 mx-auto border-b border-gray-300"></div>
-
-<!-- Layout -->
 <div class="w-full flex flex-col lg:flex-row pt-4 px-4 sm:px-6 lg:px-12">
   <nav
     class="grid grid-cols-2 gap-3 text-lg sm:text-xl lg:text-2xl font-pompiere items-center mb-5
-           lg:flex lg:flex-col lg:w-1/8 lg:border-e lg:border-gray-300 lg:gap-3"
+           lg:flex lg:flex-col lg:w-1/8 lg:border-e lg:border-gray-300 lg:gap-3 lg:pt-3"
   >
     {
       [
-        { href: "/all", label: "Alle Produkte" },
-        { href: "/bags", label: "Taschen" },
-        { href: "/backpacks", label: "Rucksäcke" },
-        { href: "/buttons", label: "Zwirnknöpfe" },
-        { href: "/blankets", label: "Decken" },
-        { href: "/misc", label: "Verschiedenes" },
+        { href: "/products/all", label: "Alle Produkte" },
+        { href: "/products/blankets", label: "Decken" },
+        { href: "/products/backpacks", label: "Rucksäcke" },
+        { href: "/products/bags", label: "Taschen" },
+        { href: "/products/misc", label: "Verschiedenes" },
+        { href: "/products/buttons", label: "Zwirnknöpfe" },
       ].map(({ href, label }) => (
         <a
           href={href}
@@ -86,10 +78,14 @@ images = await Promise.all(
     }
   </nav>
 
-  <!-- Image Grid -->
-  <div class={`flex-1 ${desc ? "lg:w-7/8" : "lg:w-5/8"}`}>
+  <div class={`flex-1 flex flex-col lg:w-7/8`}>
     <div
-      class={`grid grid-cols-1 sm:grid-cols-2 ${desc ? "xl:grid-cols-2" : "xl:grid-cols-3"} gap-3 px-6 pb-3`}
+      class={`mx-auto ${desc === "" ? "hidden" : "block"} border-b border-t lg:border-t-0 border-gray-300 py-3 lg:mx-10 font-pompiere text-xl lg:text-2xl tracking-wide leading-relaxed lg:text-justify text-center mb-5 justify-self-center`}
+    >
+      {desc}
+    </div>
+    <div
+      class={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 px-6 pb-3`}
     >
       {
         images.map((img, i) => (
@@ -109,15 +105,6 @@ images = await Promise.all(
       }
     </div>
   </div>
-
-  <!-- Description -->
-  {
-    desc && (
-      <div class="lg:w-2/8 border-t lg:border-t-0 lg:border-l border-gray-300 pt-4 lg:pt-0 lg:pl-6 font-pompiere text-xl lg:text-2xl tracking-wide leading-relaxed text-justify mb-5">
-        {desc}
-      </div>
-    )
-  }
 </div>
 
 <!-- Modal Component -->

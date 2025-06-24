@@ -40,27 +40,27 @@ let imageImports: Record<string, () => Promise<{ default: string }>> = {};
 switch (imageType) {
   case "Decken":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Decken/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Decken/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Knoepfe":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Knoepfe/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Knoepfe/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Rucksaecke":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Rucksaecke/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Rucksaecke/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Taschen":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Taschen/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Taschen/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
   case "Verschiedenes":
     imageImports = import.meta.glob(
-      "/src/images/Produkte/Verschiedenes/*.{jpeg,jpg,png,gif}",
+      "/src/images/Produkte/Verschiedenes/*.{jpeg,jpg,png,gif,JPG}",
     ) as Record<string, () => Promise<{ default: string }>>;
     break;
 }
