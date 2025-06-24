@@ -1,6 +1,7 @@
 #own
 art/
 art_julia/
+secret/
 
 # generated types
 .astro/

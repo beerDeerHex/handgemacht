@@ -79,12 +79,12 @@ images = await Promise.all(importFns.map((importFn) => importFn())).then(
     <h1 class="text-5xl font-pompiere tracking-widest">{title}</h1>
   </div>
 
-  <div class="flex-4/6 h-10">
-    <div class="flex flex-col md:flex-row justify-center h-full gap-4 px-4">
+  <div class="flex-4/6 h-fit">
+    <div class="flex flex-col md:flex-row justify-center h-full gap-6 px-4">
       {
         images.map((img, i) => (
           <div
-            class={`w-full xl:w-auto flex-1 p-4 relative cursor-pointer hover:opacity-80
+            class={`w-full xl:w-auto flex-1 relative cursor-pointer hover:opacity-80
             ${i === 0 ? "" : "hidden md:block"}`}
             onclick={`openModal('${title}','${i}')`}
           >
@@ -92,7 +92,7 @@ images = await Promise.all(importFns.map((importFn) => importFn())).then(
               id={`img-${title}-${i}`}
               src={img}
               alt="Produktbild"
-              class="w-full h-full object-scale-down cursor-pointer z-100 border-1 border-black"
+              class="w-full h-full object-contain cursor-pointer z-100 border-1 border-black"
               loading={loading}
             />
           </div>

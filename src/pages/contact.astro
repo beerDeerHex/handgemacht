@@ -1,0 +1,132 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <script
+    src="https://www.google.com/recaptcha/api.js?render=6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio"
+  ></script>
+  <div
+    class="w-full flex flex-col items-center justify-center px-2 py-10 lg:px-4"
+  >
+    <p
+      class="font-pompiere text-xl md:text-4xl mb-2 text-center lg:w-1/2 w-11/12"
+    >
+      Du hast Fragen, Wünsche oder möchtest ein individuelles Unikat anfragen?
+    </p>
+    <p
+      class="font-pompiere text-xl md:text-4xl text-center mb-8 lg:w-1/2 w-11/12"
+    >
+      Schreib mir einfach über das Kontaktformular – ich freue mich auf deine
+      Nachricht!
+    </p>
+    <form
+      class="lg:w-4/12 w-11/12 mx-auto bg-white rounded-lg shadow-md p-2 lg:p-6 flex flex-col gap-5 border border-gray-200"
+      id="contact-form"
+    >
+      <input type="hidden" name="form-name" value="contactRequest" />
+      <div>
+        <label for="name" class="block font-pompiere text-xl mb-1">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-200 font-pompiere text-lg"
+        />
+      </div>
+      <div>
+        <label for="email" class="block font-pompiere text-xl mb-1"
+          >E-Mail</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-200 font-pompiere text-lg"
+        />
+      </div>
+      <div>
+        <label for="type" class="block font-pompiere text-xl mb-1"
+          >Anliegen</label
+        >
+        <select
+          id="type"
+          name="type"
+          required
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-200 font-pompiere text-lg"
+        >
+          <option value="">Bitte wählen…</option>
+          <option value="anfrage">Allgemeine Anfrage</option>
+          <option value="auftrag">Auftragswunsch</option>
+          <option value="feedback">Feedback</option>
+        </select>
+      </div>
+      <div>
+        <label for="message" class="block font-pompiere text-xl mb-1"
+          >Nachricht</label
+        >
+        <textarea
+          id="message"
+          name="message"
+          rows="5"
+          required
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-200 font-pompiere text-lg resize-y"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="bg-gray-100 hover:bg-gray-200 text-black font-pompiere text-2xl px-6 py-3 rounded border border-gray-300 transition-colors duration-200 shadow"
+      >
+        Absenden
+      </button>
+    </form>
+
+    <p id="status-message" class="text-green-600 mt-2"></p>
+  </div>
+
+  <script type="module">
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("status-message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        // Run reCAPTCHA before sending the request
+        const token = await grecaptcha.execute(
+          "6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio",
+          {
+            action: "contact_form",
+          },
+        );
+
+        // Add token to payload
+        data.recaptchaToken = token;
+
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          status.textContent = "Danke! Deine Nachricht wurde gesendet.";
+          form.reset();
+        } else {
+          status.textContent =
+            "Fehler beim Senden. Bitte versuche es später erneut.";
+        }
+      } catch (error) {
+        status.textContent = "Netzwerkfehler – bitte später erneut versuchen.";
+      }
+    });
+  </script>
+</Layout>
