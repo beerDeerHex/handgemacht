@@ -34,7 +34,7 @@ jobs:
 
           rm -rf deploy-repo/*
           cp -r dist/* deploy-repo/
-          cp -r backend/* deploy-repo/
+          cp -r backend/* deploy-repo/api/
 
           cd deploy-repo
           git add .
