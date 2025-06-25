@@ -3,9 +3,6 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <script
-    src="https://www.google.com/recaptcha/api.js?render=6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio"
-  ></script>
   <div
     class="w-full flex flex-col items-center justify-center px-2 py-10 lg:px-4"
   >
@@ -86,6 +83,10 @@ import Layout from "../layouts/Layout.astro";
     <p id="status-message" class="text-green-600 mt-2"></p>
   </div>
 
+  <script
+    is:inline
+    src="https://www.google.com/recaptcha/api.js?render=6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio"
+  ></script>
   <script type="module">
     const form = document.getElementById("contact-form");
     const status = document.getElementById("status-message");
@@ -96,37 +97,35 @@ import Layout from "../layouts/Layout.astro";
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      try {
-        // Run reCAPTCHA before sending the request
-        const token = await grecaptcha.execute(
-          "6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio",
-          {
-            action: "contact_form",
-          },
-        );
+      // Run reCAPTCHA before sending the request
+      grecaptcha.ready(function () {
+        grecaptcha
+          .execute("6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio", {
+            action: "submit",
+          })
+          .then(function (token) {
+            // Add token to payload
+            data.recaptchaToken = token;
+            const res = fetch(
+              "https://handgemacht-claudiawild.com/contact_request.php",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              },
+            );
 
-        // Add token to payload
-        data.recaptchaToken = token;
-
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (res.ok) {
-          status.textContent = "Danke! Deine Nachricht wurde gesendet.";
-          form.reset();
-        } else {
-          status.textContent =
-            "Fehler beim Senden. Bitte versuche es später erneut.";
-        }
-      } catch (error) {
-        status.textContent = "Netzwerkfehler – bitte später erneut versuchen.";
-      }
+            if (res.ok) {
+              status.textContent = "Danke! Deine Nachricht wurde gesendet.";
+              form.reset();
+            } else {
+              status.textContent =
+                "Fehler beim Senden. Bitte versuche es später erneut.";
+            }
+          });
+      });
     });
   </script>
 </Layout>
