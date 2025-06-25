@@ -103,10 +103,10 @@ import Layout from "../layouts/Layout.astro";
           .execute("6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio", {
             action: "submit",
           })
-          .then(function (token) {
+          .then(async function (token) {
             // Add token to payload
             data.recaptchaToken = token;
-            const res = fetch(
+            const res = await fetch(
               "https://handgemacht-claudiawild.com/contact_request.php",
               {
                 method: "POST",
