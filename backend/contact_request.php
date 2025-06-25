@@ -8,21 +8,35 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Create a simple log entry
-$logMessage = date('Y-m-d H:i:s') . " - Message received\n";
+// Log the request for debugging
+error_log("Message received at " . date('Y-m-d H:i:s'));
 
-// Save to a log file
-file_put_contents('message-log.txt', $logMessage, FILE_APPEND);
+// Convert the json input to an associative array
+$rawData = file_get_contents('php://input');
+$data = json_decode($rawData, true);
 
-// Return a simple JSON response
-header('Content-Type: application/json');
-echo json_encode(['status' => 'success', 'message' => 'Message logged']);
+// Usage example:
+$mysqli = getDatabaseConnection();
 
-/**
- * Example: Logging with error_log
- * This logs a message to the PHP error log.
- */
-error_log("Custom log entry: Message received at " . date('Y-m-d H:i:s'));
+function getDatabaseConnection(): mysqli {
+    $host = 'localhost';
+    $db   = 'u237207940_handgemacht';
+    $db_user = getenv('DB_USER');
+    $db_pass = getenv('DB_PASS');
+
+    // Create mysqli connection
+    $mysqli = new mysqli($host, $db_user, $db_pass, $db);
+
+    if ($mysqli->connect_error) {
+        error_log("Database connection failed: " . $mysqli->connect_error);
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => 'Database connection failed']);
+        exit;
+    }
+
+    error_log("Database connection established using mysqli.");
+    return $mysqli;
+}
 
 // End of contact_request.php
 ?>
