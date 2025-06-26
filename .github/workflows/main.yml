@@ -36,6 +36,8 @@ jobs:
           cp -r dist/* deploy-repo/
           cp -r api deploy-repo/
           cp -r cronjobs deploy-repo/
+          cp -r utilities deploy-repo/
+          cp -r config/* deploy-repo/ 
 
           cd deploy-repo
           git add .
