@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 import Header from "../components/Header.astro";
+import Image from "astro/components/Image.astro";
+
+import WKOLogo from "../images/Rechtliches/ecg.jpg";
 ---
 
 <html lang="en">
@@ -29,6 +32,7 @@ import Header from "../components/Header.astro";
           <ul class="space-y-0.5">
             <li><a href="/about" class="hover:underline">Über mich</a></li>
             <li><a href="/contact" class="hover:underline">Kontakt</a></li>
+            <li><a href="/events" class="hover:underline">Veranstaltungen</a></li>
           </ul>
         </div>
 
@@ -47,7 +51,19 @@ import Header from "../components/Header.astro";
 
         <!-- Column 3 (optional: branding or logo in future) -->
         <div class="md:text-right text-center md:self-end">
-          <p class="mt-4 md:mt-0">&copy; Claudia Wild 2025</p>
+          <a 
+            href="https://www.wkoecg.at/Ecg.aspx?FirmaID=8b9c6511-c266-4548-b07e-5de182a4f6bb"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block mb-2"
+          >
+            <Image
+              src={WKOLogo}
+              alt="WKÖ Mitglied"
+              class="h-8 w-auto mx-auto md:ml-auto md:mr-0"
+            />
+          </a>
+          <p class="mt-2 md:mt-0">&copy; Claudia Wild 2025</p>
         </div>
       </div>
     </footer>
