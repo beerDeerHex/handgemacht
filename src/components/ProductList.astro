@@ -10,6 +10,30 @@ interface Props {
 
 const { title = "Titel", desc = "", imageType = "Decken" } = Astro.props;
 
+// Static shuffle function using a simple seeded random generator
+function staticShuffle<T>(array: T[], seed: string): T[] {
+  const shuffled = [...array];
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+
+  // Simple seeded random function
+  const seededRandom = (seed: number) => {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  };
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRandom(hash + i) * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+}
+
 let images: string[] = [];
 let imageImports: Record<string, () => Promise<{ default: string }>> = {};
 
@@ -49,13 +73,16 @@ switch (imageType) {
 images = await Promise.all(
   Object.values(imageImports).map((importFn) => importFn()),
 ).then((modules) => modules.map((mod) => mod.default));
+
+// Apply static shuffle to images using imageType as seed
+images = staticShuffle(images, desc);
 ---
 
 <!-- Title -->
 <div class="w-full flex flex-col lg:flex-row pt-4 px-4 sm:px-6 lg:px-12">
   <nav
     class="grid grid-cols-2 gap-3 text-lg sm:text-xl lg:text-2xl font-pompiere items-center mb-5
-           lg:flex lg:flex-col lg:w-1/8 lg:border-e lg:border-gray-300 lg:gap-3 lg:pt-3"
+           lg:flex lg:flex-col lg:w-1/8 lg:gap-3 lg:pt-3 lg:sticky lg:top-30 lg:h-fit lg:self-start"
   >
     {
       [
@@ -78,7 +105,7 @@ images = await Promise.all(
     }
   </nav>
 
-  <div class={`flex-1 flex flex-col lg:w-7/8`}>
+  <div class={`flex-1 flex flex-col lg:w-7/8 lg:border-s lg:border-gray-300 mb-3`}>
     <div
       class={`mx-auto ${desc === "" ? "hidden" : "block"} border-b border-t lg:border-t-0 border-gray-300 py-3 lg:mx-10 font-pompiere text-xl lg:text-2xl tracking-wide leading-relaxed lg:text-justify text-center mb-5 justify-self-center`}
     >
