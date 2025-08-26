@@ -85,7 +85,7 @@ import Layout from "../layouts/Layout.astro";
 
   <script
     is:inline
-    src="https://www.google.com/recaptcha/api.js?render=6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio"
+    src="https://www.google.com/recaptcha/api.js?render=6LfwR7MrAAAAAHknEyczRYuxbanugk2-cl7i_aQ-"
   ></script>
   <script type="module">
     const form = document.getElementById("contact-form");
@@ -100,7 +100,7 @@ import Layout from "../layouts/Layout.astro";
       // Run reCAPTCHA before sending the request
       grecaptcha.ready(function () {
         grecaptcha
-          .execute("6LdfVWwrAAAAADmp20Kzo8cV4SdoUvdaBV3fElio", {
+          .execute("6LfwR7MrAAAAAHknEyczRYuxbanugk2-cl7i_aQ-", {
             action: "submit",
           })
           .then(async function (token) {
