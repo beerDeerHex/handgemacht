@@ -1,0 +1,190 @@
+---
+import { Image } from "astro:assets";
+
+interface Event {
+  id: string;
+  name: string;
+  date: string;
+  shortDescription: string;
+  image: string;
+  fullDescription?: string;
+  dateSort: Date;
+}
+
+interface Props {
+  events: Event[];
+}
+
+const { events } = Astro.props;
+---
+
+<!-- Event Modal -->
+<div
+  id="event-modal"
+  class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center hidden"
+>
+  <div
+    class="bg-white rounded-lg max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+  >
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center p-4 border-b border-gray-200">
+      <div class="flex items-center gap-3">
+        <h2 id="event-modal-title" class="text-2xl font-pompiere font-semibold">
+        </h2>
+        <span id="event-modal-status" class="text-xs px-2 py-1 rounded-full"
+        ></span>
+      </div>
+      <button
+        onclick="closeEventModal()"
+        class="text-gray-500 hover:text-gray-700 text-3xl font-bold"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="p-6">
+      <!-- Event Image Container -->
+      <div
+        id="event-modal-image-container"
+        class="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden p-2"
+      >
+        <!-- Pre-rendered images for each event -->
+        {
+          events.map((event) => (
+            <div id={`event-image-${event.id}`} class="hidden w-full h-full">
+              {event.image ? (
+                <Image
+                  src={event.image}
+                  alt={event.name}
+                  width={900}
+                  height={600}
+                  class="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="text-gray-500 font-pompiere text-lg text-center px-4 flex items-center justify-center h-full">
+                  {event.name}
+                </div>
+              )}
+            </div>
+          ))
+        }
+
+        <!-- Default placeholder -->
+        <div
+          id="event-modal-image-placeholder"
+          class="text-gray-500 font-pompiere text-lg"
+        >
+          Veranstaltungsbild
+        </div>
+      </div>
+
+      <!-- Event Date -->
+      <div class="mb-4">
+        <span
+          id="event-modal-date-badge"
+          class="inline-block text-gray-800 font-pompiere text-lg px-3 py-1 rounded-full"
+        >
+          📅 <span id="event-modal-date"></span>
+        </span>
+      </div>
+
+      <!-- Event Description -->
+      <div class="mb-6">
+        <h3 class="font-pompiere text-xl font-semibold mb-2">Beschreibung</h3>
+        <p
+          id="event-modal-description"
+          class="font-pompiere text-lg leading-relaxed text-gray-700"
+        >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Event Modal Script -->
+<script is:inline define:vars={{ events }}>
+  function openEventModal(eventId) {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
+
+    const modal = document.getElementById("event-modal");
+    const title = document.getElementById("event-modal-title");
+    const status = document.getElementById("event-modal-status");
+    const date = document.getElementById("event-modal-date");
+    const dateBadge = document.getElementById("event-modal-date-badge");
+    const description = document.getElementById("event-modal-description");
+    const imagePlaceholder = document.getElementById(
+      "event-modal-image-placeholder",
+    );
+
+    title.textContent = event.name;
+    date.textContent = event.date;
+    description.textContent = event.fullDescription || event.shortDescription;
+
+    // Hide all event images first
+    events.forEach((e) => {
+      const img = document.getElementById(`event-image-${e.id}`);
+      if (img) img.classList.add("hidden");
+    });
+
+    // Hide placeholder
+    imagePlaceholder.classList.add("hidden");
+
+    // Show the specific event image
+    const eventImage = document.getElementById(`event-image-${eventId}`);
+    if (eventImage) {
+      eventImage.classList.remove("hidden");
+    } else {
+      // Show placeholder if no image found
+      imagePlaceholder.classList.remove("hidden");
+    }
+
+    // Compare Date objects properly
+    const now = new Date();
+    const eventDate = new Date(event.dateSort);
+
+    // Handle past vs future styling
+    if (eventDate < now) {
+      status.textContent = "Vergangen";
+      status.className =
+        "text-xs px-2 py-1 rounded-full bg-gray-500 text-white";
+      dateBadge.className =
+        "inline-block bg-gray-100 text-gray-800 font-pompiere text-lg px-3 py-1 rounded-full";
+    } else {
+      status.textContent = "Bevorstehend";
+      status.className =
+        "text-xs px-2 py-1 rounded-full bg-gray-700 text-white";
+      dateBadge.className =
+        "inline-block bg-gray-50 text-gray-800 font-pompiere text-lg px-3 py-1 rounded-full";
+    }
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeEventModal() {
+    const modal = document.getElementById("event-modal");
+    modal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  // Close on Escape key
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeEventModal();
+    }
+  });
+
+  // Close on background click
+  document.getElementById("event-modal").addEventListener("click", (e) => {
+    if (e.target.id === "event-modal") {
+      closeEventModal();
+    }
+  });
+
+  // Expose functions globally
+  window.openEventModal = openEventModal;
+  window.closeEventModal = closeEventModal;
+</script>
