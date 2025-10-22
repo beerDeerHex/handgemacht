@@ -25,12 +25,17 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Push to deployment repo
+      - name: Start SSH agent and add deploy key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Push to deployment repo (SSH)
         run: |
           git config --global user.name "Stefan Wild"
           git config --global user.email "wildstefan1221@gmail.com"
 
-          git clone https://x-access-token:${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/beerDeerHex/handgemacht-deploy.git deploy-repo
+          git clone git@github.com:beerDeerHex/handgemacht-deploy.git deploy-repo
 
           rm -rf deploy-repo/*
           cp -r dist/* deploy-repo/
@@ -41,5 +46,5 @@ jobs:
 
           cd deploy-repo
           git add .
-          git commit -m "Deploy from dev repo on $(date)"
-          git push
+          git commit -m "Deploy from dev repo on $(date)" || echo "No changes to commit"
+          git push origin HEAD
