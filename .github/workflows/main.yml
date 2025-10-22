@@ -28,7 +28,7 @@ jobs:
       - name: Start SSH agent and add deploy key
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_REPO_KEY }}
 
       - name: Push to deployment repo (SSH)
         run: |
