@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import ImageModal from "./ImageModal.astro";
 
 interface Event {
   id: string;
@@ -52,9 +53,14 @@ const { events } = Astro.props;
         <!-- Pre-rendered images for each event -->
         {
           events.map((event) => (
-            <div id={`event-image-${event.id}`} class="hidden w-full h-full">
+            <div
+              id={`event-image-${event.id}`}
+              class="hidden w-full h-full"
+              onclick={`openModal('${event.id}','${0}')`}
+            >
               {event.image ? (
                 <Image
+                  id={`img-${event.id}-${0}`}
                   src={event.image}
                   alt={event.name}
                   width={900}
@@ -86,7 +92,7 @@ const { events } = Astro.props;
           id="event-modal-date-badge"
           class="inline-block text-gray-800 font-pompiere text-lg px-3 py-1 rounded-full"
         >
-          📅 <span id="event-modal-date"></span>
+          <span id="event-modal-date"></span>
         </span>
       </div>
 
@@ -102,6 +108,9 @@ const { events } = Astro.props;
     </div>
   </div>
 </div>
+
+<!-- Modal Component -->
+<ImageModal numOfPictures={1} numOfPicturesMobile={1} />
 
 <!-- Event Modal Script -->
 <script is:inline define:vars={{ events }}>

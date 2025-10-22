@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "astro-build.astro-vscode",
   "notebook.defaultFormatter": "astro-build.astro-vscode",
   "git.openRepositoryInParentFolders": "always",
   "editor.defaultFoldingRangeProvider": "esbenp.prettier-vscode",

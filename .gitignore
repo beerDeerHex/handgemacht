@@ -2,6 +2,7 @@
 art/
 art_julia/
 secret/
+resources/
 
 # generated types
 .astro/
