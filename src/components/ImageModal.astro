@@ -62,7 +62,7 @@ const { numOfPictures = 0, numOfPicturesMobile = 0 } = Astro.props;
   const modalImg = document.getElementById("modal-img");
 
   function openModal(tag, index) {
-    currentIdx = index;
+    currentIdx = Number(index);
     currentTag = tag;
     updateImgSrc();
     modal.classList.remove("hidden");
