@@ -89,6 +89,7 @@ images = await Promise.all(importFns.map((importFn) => importFn())).then(
             onclick={`openModal('${title}','${i}')`}
           >
             <Image
+              layout="full-width"
               id={`img-${title}-${i}`}
               src={img}
               alt="Produktbild"

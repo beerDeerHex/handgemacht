@@ -23,6 +23,7 @@ images = await Promise.all(
       class="flex-shrink-0 flex justify-center items-center w-full md:w-1/2 mb-4 md:mb-0"
     >
       <Image
+        layout="full-width"
         src={HeroImage}
         alt="Handmade quilt"
         class="w-50 md:w-130 md:h-full object-cover rounded pb-4"
@@ -66,6 +67,7 @@ images = await Promise.all(
           onclick={`openModal('work','${i}')`}
         >
           <Image
+            layout="full-width"
             id={`img-work-${i}`}
             src={img}
             alt="Produktbild"
