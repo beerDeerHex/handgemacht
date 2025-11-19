@@ -104,6 +104,15 @@ const allEvents: Event[] = [
     fullDescription:
       "Entdecke die alte Handwerkskunst des Zwirnknopfens und gestalte deine eigenen, einzigartigen Knöpfe! In diesem ganztägigen Workshop mit Claudia Wild lernst du Schritt für Schritt, wie aus Faden und Stoff kleine Kunstwerke entstehen – mit viel Herz, Kreativität und handwerklichem Geschick.",
   },
+  {
+    id: "nwm-2025",
+    name: "4. Nachaltiger Weihnachtsmarkt",
+    date: "6. Dezember 2025 14-19 Uhr; 7. Dezember 2025 10-18 Uhr",
+    dateSort: new Date("2025-12-06"),
+    image: imageMap["Nachaltiger_Weihnachtsmarkt_2025"] || "",
+    fullDescription:
+      "Lass dich von der stimmungsvollen Atmosphäre des nachhaltigen Weihnachtsmarkts verzaubern! Hier erwarten dich liebevoll gefertigte Kunsthandwerke, regionale Spezialitäten und kreative Ideen voller Herzblut. Entdecke besondere Stücke, die Geschichten erzählen – und Menschen, die ihr Handwerk mit Leidenschaft leben.",
+  },
 ];
 
 // Sort events by date
@@ -172,12 +181,11 @@ futureEvents.reverse();
                 <div class="aspect-video bg-gray-50 flex items-center justify-center relative overflow-hidden">
                   {event.image ? (
                     <Image
-                      layout="full-width"
                       src={event.image}
                       alt={event.name}
                       width={400}
                       height={225}
-                      class="w-full h-full object-cover"
+                      class="h-full w-full object-contain"
                       loading="lazy"
                     />
                   ) : (
@@ -235,12 +243,11 @@ futureEvents.reverse();
                 <div class="aspect-video bg-gray-100 flex items-center justify-center relative overflow-hidden p-2">
                   {event.image ? (
                     <Image
-                      layout="full-width"
                       src={event.image}
                       alt={event.name}
                       height={225}
                       width={400}
-                      class="w-full h-full object-contain"
+                      class="h-full w-full object-contain"
                       loading="lazy"
                     />
                   ) : (
