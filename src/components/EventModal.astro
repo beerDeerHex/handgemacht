@@ -6,7 +6,6 @@ interface Event {
   id: string;
   name: string;
   date: string;
-  shortDescription: string;
   image: string;
   fullDescription?: string;
   dateSort: Date;
@@ -130,7 +129,7 @@ const { events } = Astro.props;
 
     title.textContent = event.name;
     date.textContent = event.date;
-    description.textContent = event.fullDescription || event.shortDescription;
+    description.textContent = event.fullDescription;
 
     // Hide all event images first
     events.forEach((e) => {

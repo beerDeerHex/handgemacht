@@ -126,14 +126,6 @@ const allEvents: Event[] = [
 
 // Sort events by date
 allEvents.sort((a, b) => b.dateSort.getTime() - a.dateSort.getTime());
-
-// Separate past and future events
-const now = new Date();
-const futureEvents = allEvents.filter((event) => event.dateSort >= now);
-const pastEvents = allEvents.filter((event) => event.dateSort < now);
-
-// Reverse future events to show nearest first
-futureEvents.reverse();
 ---
 
 <Layout>
@@ -164,6 +156,59 @@ futureEvents.reverse();
       </div>
     </div>
 
+    <!-- All Events Rendered Together -->
+    <div
+      id="all-events-list"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {
+        allEvents.map((event) => (
+          <div
+            class="event-card bg-white rounded-lg shadow-md border-2 border-gray-300 overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+            data-date={event.dateSort.toISOString()}
+            onclick={`openEventModal('${event.id}')`}
+          >
+            <div
+              class={
+                "aspect-video flex items-center justify-center relative overflow-hidden " +
+                (event.image ? "bg-gray-50" : "bg-gray-100 p-2")
+              }
+            >
+              {event.image ? (
+                <Image
+                  src={event.image}
+                  alt={event.name}
+                  width={400}
+                  height={225}
+                  class="h-full w-full object-contain"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="text-gray-700 font-pompiere text-lg text-center px-4">
+                  {event.name}
+                </div>
+              )}
+              <div class="absolute top-2 right-2 text-white text-xs px-2 py-1 rounded-full event-status" />
+            </div>
+            <div class="p-4">
+              <h3 class="font-pompiere text-xl font-semibold mb-2">
+                {event.name}
+              </h3>
+              <p class="text-gray-600 font-pompiere text-lg mb-2 font-medium">
+                {event.date}
+              </p>
+              <button
+                class="mt-4 w-full bg-white hover:bg-gray-50 text-gray-800 font-pompiere text-lg px-4 py-2 rounded border-2 border-gray-300 transition-colors duration-200"
+                onclick={`openEventModal('${event.id}')`}
+              >
+                Mehr erfahren
+              </button>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
     <!-- Future Events Section -->
     <section id="future" class="max-w-6xl mx-auto mb-16 pt-8">
       <h2
@@ -171,62 +216,12 @@ futureEvents.reverse();
       >
         Kommende Veranstaltungen
       </h2>
-
-      {
-        futureEvents.length === 0 ? (
-          <div class="text-center py-12 bg-gray-50 rounded-lg">
-            <p class="font-pompiere text-2xl text-gray-600">
-              Aktuell sind keine zukünftigen Veranstaltungen geplant. Schauen
-              Sie bald wieder vorbei!
-            </p>
-          </div>
-        ) : (
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {futureEvents.map((event) => (
-              <div
-                class="bg-white rounded-lg shadow-md border-2 border-gray-300 overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer transform hover:scale-105"
-                onclick={`openEventModal('${event.id}')`}
-              >
-                <div class="aspect-video bg-gray-50 flex items-center justify-center relative overflow-hidden">
-                  {event.image ? (
-                    <Image
-                      src={event.image}
-                      alt={event.name}
-                      width={400}
-                      height={225}
-                      class="h-full w-full object-contain"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="text-gray-700 font-pompiere text-lg text-center px-4">
-                      {event.name}
-                    </div>
-                  )}
-                  <div class="absolute top-2 right-2 bg-gray-700 text-white text-xs px-2 py-1 rounded-full">
-                    Bevorstehend
-                  </div>
-                </div>
-                <div class="p-4">
-                  <h3 class="font-pompiere text-xl font-semibold mb-2">
-                    {event.name}
-                  </h3>
-                  <p class="text-gray-600 font-pompiere text-lg mb-2 font-medium">
-                    {event.date}
-                  </p>
-                  <button
-                    class="mt-4 w-full bg-white hover:bg-gray-50 text-gray-800 font-pompiere text-lg px-4 py-2 rounded border-2 border-gray-300 transition-colors duration-200"
-                    onclick={`openEventModal('${event.id}')`}
-                  >
-                    Mehr erfahren
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )
-      }
+      <div
+        id="future-events-list"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+      </div>
     </section>
-
     <!-- Past Events Section -->
     <section id="past" class="max-w-6xl mx-auto mb-16 pt-8">
       <h2
@@ -234,88 +229,61 @@ futureEvents.reverse();
       >
         Vergangene Veranstaltungen
       </h2>
-
-      {
-        pastEvents.length === 0 ? (
-          <div class="text-center py-12 bg-gray-50 rounded-lg">
-            <p class="font-pompiere text-2xl text-gray-600">
-              Noch keine vergangenen Veranstaltungen vorhanden.
-            </p>
-          </div>
-        ) : (
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pastEvents.map((event) => (
-              <div
-                class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer opacity-90 hover:opacity-100"
-                onclick={`openEventModal('${event.id}')`}
-              >
-                <div class="aspect-video bg-gray-100 flex items-center justify-center relative overflow-hidden p-2">
-                  {event.image ? (
-                    <Image
-                      src={event.image}
-                      alt={event.name}
-                      height={225}
-                      width={400}
-                      class="h-full w-full object-contain"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="text-gray-600 font-pompiere text-lg text-center px-4">
-                      {event.name}
-                    </div>
-                  )}
-                  <div class="absolute top-2 right-2 bg-gray-500 text-white text-xs px-2 py-1 rounded-full">
-                    Vergangen
-                  </div>
-                </div>
-                <div class="p-4">
-                  <h3 class="font-pompiere text-xl font-semibold mb-2 text-gray-700">
-                    {event.name}
-                  </h3>
-                  <p class="text-gray-500 font-pompiere text-lg mb-2">
-                    {event.date}
-                  </p>
-                  <button
-                    class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-pompiere text-lg px-4 py-2 rounded border border-gray-300 transition-colors duration-200"
-                    onclick={`openEventModal('${event.id}')`}
-                  >
-                    Rückblick
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )
-      }
+      <div
+        id="past-events-list"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+      </div>
     </section>
   </div>
 
   <!-- Event Modal Component -->
   <EventModal events={allEvents} />
 
-  <!-- Smooth Scrolling Script -->
+  <!-- Smooth Scrolling & Dynamic Event Sorting Script -->
   <script is:inline>
     function scrollToSection(sectionId) {
       const element = document.getElementById(sectionId);
       if (element) {
-        // Get the actual header height dynamically
         const header = document.getElementById("header");
         const headerHeight = header ? header.offsetHeight : 0;
-
-        // Get the element's position
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition =
           elementPosition + window.pageYOffset - headerHeight;
-
-        // Scroll to the calculated position
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
       }
     }
-
-    // Expose function globally
     window.scrollToSection = scrollToSection;
+
+    // Move event cards to correct section based on date
+    const now = new Date();
+    const allCards = Array.from(document.querySelectorAll(".event-card"));
+    const futureList = document.getElementById("future-events-list");
+    const pastList = document.getElementById("past-events-list");
+    allCards.forEach((card) => {
+      const eventDate = new Date(card.dataset.date);
+      const statusDiv = card.querySelector(".event-status");
+      if (eventDate < now) {
+        card.classList.add("past");
+        card.classList.remove("future");
+        if (statusDiv) {
+          statusDiv.textContent = "Vergangen";
+          statusDiv.classList.add("bg-gray-500");
+          statusDiv.classList.remove("bg-gray-700");
+        }
+        pastList.appendChild(card);
+      } else {
+        card.classList.add("future");
+        card.classList.remove("past");
+        if (statusDiv) {
+          statusDiv.textContent = "Bevorstehend";
+          statusDiv.classList.add("bg-gray-700");
+          statusDiv.classList.remove("bg-gray-500");
+        }
+        futureList.appendChild(card);
+      }
+    });
+    // Optionally hide the all-events-list container
+    document.getElementById("all-events-list").style.display = "none";
   </script>
 </Layout>
