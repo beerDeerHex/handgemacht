@@ -12,12 +12,26 @@ jobs:
 
     steps:
       - name: Checkout dev repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: node-modules-
+
+      - name: Cache Astro build (image processing)
+        uses: actions/cache@v4
+        with:
+          path: .astro
+          key: astro-${{ hashFiles('src/images/**') }}
+          restore-keys: astro-
 
       - name: Install dependencies
         run: npm install
