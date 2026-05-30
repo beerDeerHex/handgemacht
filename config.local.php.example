@@ -10,4 +10,5 @@ define('ADMIN_PASSWORD_HASH', '$2y$12$REPLACE_WITH_REAL_HASH');
 define('GITHUB_TOKEN',  'github_pat_REPLACE_ME');
 define('GITHUB_OWNER',  'REPLACE_WITH_GITHUB_USERNAME');
 define('GITHUB_REPO',   'handgemacht');
-define('GITHUB_BRANCH', 'main');
+define('GITHUB_BRANCH',       'main');
+define('GITHUB_ADMIN_BRANCH', 'admin/pending'); // working branch — never touches main until deploy
