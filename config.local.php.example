@@ -1,0 +1,13 @@
+<?php
+// Local dev config — copy this to config.local.php and fill in your values.
+// config.local.php is gitignored and never deployed.
+
+// Admin panel password (bcrypt hash).
+// Generate with: php -r "echo password_hash('yourpassword', PASSWORD_BCRYPT);"
+define('ADMIN_PASSWORD_HASH', '$2y$12$REPLACE_WITH_REAL_HASH');
+
+// GitHub fine-grained token with Contents: Read & Write on the source repo.
+define('GITHUB_TOKEN',  'github_pat_REPLACE_ME');
+define('GITHUB_OWNER',  'REPLACE_WITH_GITHUB_USERNAME');
+define('GITHUB_REPO',   'handgemacht');
+define('GITHUB_BRANCH', 'main');

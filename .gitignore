@@ -29,5 +29,6 @@ pnpm-debug.log*
 .idea/
 
 config.php
+config.local.php
 
 automator/
